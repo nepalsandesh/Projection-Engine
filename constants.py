@@ -4,3 +4,5 @@ RESOLUTION = WIDTH, HEIGHT = (1920, 1080)
 
 # colors
 BLACK = (0,0,0)
+
+MAX_RATE = 10
