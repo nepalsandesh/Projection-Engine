@@ -1,7 +1,8 @@
 import pygame 
 from constants import *
 from ui import Button
-from screens.chaos import Chaos
+from screens.simulations import Simulation
+
 
 
 class Render:
@@ -17,33 +18,41 @@ class Render:
         self.running = True
         
         # BUTTONS
-        self.ChaosEquationButton = Button(WIDTH//2 - 100, self.HEIGHT//3, 200, 60, "Chaos Equation")
-        self.SimulationButton = Button(WIDTH//2 - 100, self.HEIGHT//3 + 100, 200, 60, "Simulations")
-        self.MathEngineButton = Button(WIDTH//2 - 100, self.HEIGHT//3 + 200, 200, 60, "Math Engine")
-        self.ObjRenderButton = Button(WIDTH//2 - 100, self.HEIGHT//3 + 300 , 200, 60, "Object Render")
-        self.AlgVizButton = Button(WIDTH//2 - 100, self.HEIGHT//3 + 400 , 200, 60, "Algorithms Visualization")
+        self.ChaosEquationButton = Button(WIDTH//4 - 100, self.HEIGHT//10, 300, 60, "Chaos Equation")
+        self.SimulationButton = Button(WIDTH//4 - 100, self.HEIGHT//10 + 100, 300, 60, "Simulations")
+        self.MathEngineButton = Button(WIDTH//4 - 100, self.HEIGHT//10 + 200, 300, 60, "Math Engine")
+        self.ObjRenderButton = Button(WIDTH//4 - 100, self.HEIGHT//10 + 300 , 300, 60, "Object Render")
+        self.AlgVizButton = Button(WIDTH//4 - 100, self.HEIGHT//10 + 400 , 300, 60, "Algorithms Visualization")
+        self.GamesButton = Button(WIDTH//4 - 100, self.HEIGHT//10 + 500 , 300, 60, "Games")
+        
+        # After Button Click
+        self.Simulation = Simulation(self.screen, self.RESOLUTION, self.clock, self.FPS)
         
         
-        # SCREENS
-        self.chaosScreen = Chaos(self.screen, self.clock)
+        
     
     def clear_screen(self):
         self.screen.fill((0,0,0))
         
     def displayMainMenu(self):
-        if self.ChaosEquationButton.Draw(self.screen):
-            self.chaosScreen.Run()
-        elif self.SimulationButton.Draw(self.screen):
-            pass
+        if self.SimulationButton.Draw(self.screen):
+            self.Simulation.run_menu()
         elif self.MathEngineButton.Draw(self.screen):
-            pass
+            self.MathEngine.Run()
         elif self.ObjRenderButton.Draw(self.screen):
-            pass
+            self.ObjRender.Run()
         elif self.AlgVizButton.Draw(self.screen):
-            pass
+            self.AlgViz.Run()
+        elif self.GamesButton.Draw(self.screen):
+            self.Games.Run()
     
     def check_events(self):
-        [exit() for event in pygame.event.get() if event.type == pygame.QUIT]
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.running = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    self.running = False
         
     def run(self):
         while self.running:
