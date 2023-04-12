@@ -1,20 +1,27 @@
 import pygame 
 from ui import Button
-
+from screens.simulations_screens import doublePendulum
 
 class Simulation:
     def __init__(self, screen, resolution, clock, FPS=60):
         self.screen = screen
+        self.resolution = resolution
         self.WIDTH = resolution[0]
         self.HEIGHT = resolution[1]
         self.running = True
         self.clock = clock
         self.FPS = 60
         
-        # BUTTONS
+        
+        
+        #SIMULATION BUTTONS
         self.SHMbutton = Button(self.WIDTH//2 - 100, self.HEIGHT//3, 300, 60, "Simple Harmonic Motion")
         self.ChaosAttractorButton = Button(self.WIDTH//2 - 100, self.HEIGHT//3+100, 300, 60, "Chaos and Attractor")
         self.GameofLifeButton = Button(self.WIDTH//2 - 100, self.HEIGHT//3+200, 300, 60, "Conways Game of Life")
+        
+        #SUB Buttons 
+        self.DoublePendulumButton = Button(self.WIDTH//1.5 - 100, self.HEIGHT//3, 300, 60, "Double Pendulum")
+        
         
         
     def clear_screen(self):
@@ -40,13 +47,29 @@ class Simulation:
                     self.clock.tick(self.FPS)
                     self.clear_screen()
                     self.check_events()
-                    pygame.draw.circle(self.screen, (255,255,255), (500, 500), 10)
+                    if self.DoublePendulumButton.Draw(self.screen):
+                        double_pendulum = doublePendulum.DoublePendulum(self.screen, self.resolution, self.clock, self.FPS)
+                        double_pendulum.render()
                     pygame.display.flip()
+                self.running = True
                 
             elif self.ChaosAttractorButton.Draw(self.screen):
-                pass
+                while self.running:
+                    self.clock.tick(self.FPS)
+                    self.clear_screen()
+                    self.check_events()
+                    pygame.draw.circle(self.screen, (255,255,255), (500, 500), 50)
+                    pygame.display.flip()
+                self.running = True
+                
             elif self.GameofLifeButton.Draw(self.screen):
-                pass
+                while self.running:
+                    self.clock.tick(self.FPS)
+                    self.clear_screen()
+                    self.check_events()
+                    pygame.draw.circle(self.screen, (255,255,255), (500, 500), 100)
+                    pygame.display.flip()
+                self.running = True
             
             pygame.display.update()
         

@@ -34,7 +34,7 @@ class Render:
     def clear_screen(self):
         self.screen.fill((0,0,0))
         
-    def displayMainMenu(self):
+    def displayMenu(self):
         if self.SimulationButton.Draw(self.screen):
             self.Simulation.run_menu()
         elif self.MathEngineButton.Draw(self.screen):
@@ -60,7 +60,7 @@ class Render:
             self.clear_screen()
             self.check_events()
             
-            self.displayMainMenu()
+            self.displayMenu()
             
             pygame.display.update()
             
