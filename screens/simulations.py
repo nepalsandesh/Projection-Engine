@@ -1,6 +1,6 @@
 import pygame 
 from ui import Button
-from screens.simulations_screens import doublePendulum
+from screens.simulations_screens import doublePendulum, conway
 
 class Simulation:
     def __init__(self, screen, resolution, clock, FPS=60):
@@ -63,13 +63,13 @@ class Simulation:
                 self.running = True
                 
             elif self.GameofLifeButton.Draw(self.screen):
-                while self.running:
-                    self.clock.tick(self.FPS)
-                    self.clear_screen()
-                    self.check_events()
-                    pygame.draw.circle(self.screen, (255,255,255), (500, 500), 100)
-                    pygame.display.flip()
-                self.running = True
+                Conway = conway.ConwaysGameOfLife(self.screen, self.resolution, self.clock, self.FPS)
+                while Conway.running:
+                    # self.clock.tick(self.FPS)
+                    # self.clear_screen()
+                    # self.check_events()
+                    Conway.run()
+                
             
             pygame.display.update()
         

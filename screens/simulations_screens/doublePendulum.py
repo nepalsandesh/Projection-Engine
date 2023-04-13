@@ -26,7 +26,7 @@ class DoublePendulum:
         self.angle_velocity2 = 0
         self.angle_acceleration1 = 0
         self.angle_acceleration2 = 0
-        self.Gravity = 1
+        self.Gravity = 0.5
         self.scatter1 = []
         self.scatter2 = []
 
@@ -79,6 +79,7 @@ class DoublePendulum:
             
     def render(self):
         while self.run:
+    
             self.clock.tick(self.FPS) 
             self.screen.fill(self.BACKGROUND)       
         
