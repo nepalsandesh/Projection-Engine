@@ -91,6 +91,8 @@ class DoublePendulum:
                         self.run = False
                     if event.key == pygame.K_r:
                         restart = True
+                    if event.key == pygame.K_BACKSPACE:
+                        self.run = False  
         
             if self.restart == True:
                 self.angle1 = math.pi/2

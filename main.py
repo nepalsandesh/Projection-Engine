@@ -53,6 +53,8 @@ class Render:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.running = False
+                if event.key == pygame.K_BACKSPACE:
+                    self.running = False  
         
     def run(self):
         while self.running:

@@ -1,6 +1,6 @@
 import pygame 
 from ui import Button
-from screens.simulations_screens import doublePendulum, conway
+from screens.simulations_screens import doublePendulum, conway, gravity
 
 class Simulation:
     def __init__(self, screen, resolution, clock, FPS=60):
@@ -16,8 +16,9 @@ class Simulation:
         
         #SIMULATION BUTTONS
         self.SHMbutton = Button(self.WIDTH//2 - 100, self.HEIGHT//3, 300, 60, "Simple Harmonic Motion")
-        self.ChaosAttractorButton = Button(self.WIDTH//2 - 100, self.HEIGHT//3+100, 300, 60, "Chaos and Attractor")
-        self.GameofLifeButton = Button(self.WIDTH//2 - 100, self.HEIGHT//3+200, 300, 60, "Conways Game of Life")
+        self.GravityButton = Button(self.WIDTH//2 - 100, self.HEIGHT//3+100, 300, 60, "Gravity")
+        self.ChaosAttractorButton = Button(self.WIDTH//2 - 100, self.HEIGHT//3+200, 300, 60, "Chaos and Attractor")
+        self.GameofLifeButton = Button(self.WIDTH//2 - 100, self.HEIGHT//3+300, 300, 60, "Conways Game of Life")
         
         #SUB Buttons 
         self.DoublePendulumButton = Button(self.WIDTH//1.5 - 100, self.HEIGHT//3, 300, 60, "Double Pendulum")
@@ -34,6 +35,8 @@ class Simulation:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.running = False
+                if event.key == pygame.K_BACKSPACE:
+                    self.running = False  
   
     
     def run_menu(self):
@@ -52,7 +55,13 @@ class Simulation:
                         double_pendulum.render()
                     pygame.display.flip()
                 self.running = True
-                
+
+            elif self.GravityButton.Draw(self.screen):
+                Gravity = gravity.Gravity(self.screen, self.resolution, self.clock, self.FPS)
+                while Gravity.running:
+                    Gravity.run()
+                    
+                    
             elif self.ChaosAttractorButton.Draw(self.screen):
                 while self.running:
                     self.clock.tick(self.FPS)
@@ -65,9 +74,6 @@ class Simulation:
             elif self.GameofLifeButton.Draw(self.screen):
                 Conway = conway.ConwaysGameOfLife(self.screen, self.resolution, self.clock, self.FPS)
                 while Conway.running:
-                    # self.clock.tick(self.FPS)
-                    # self.clear_screen()
-                    # self.check_events()
                     Conway.run()
                 
             
