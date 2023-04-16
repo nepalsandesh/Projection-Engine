@@ -2,6 +2,7 @@ import pygame
 from constants import *
 from ui import Button
 from screens.simulations import Simulation
+from screens.math_engine import MathEngine
 
 
 
@@ -27,6 +28,7 @@ class Render:
         
         # After Button Click
         self.Simulation = Simulation(self.screen, self.RESOLUTION, self.clock, self.FPS)
+        self.MathEngine = MathEngine(self.screen, self.RESOLUTION, self.clock, self.FPS)
         
         
         
@@ -38,7 +40,7 @@ class Render:
         if self.SimulationButton.Draw(self.screen):
             self.Simulation.run_menu()
         elif self.MathEngineButton.Draw(self.screen):
-            self.MathEngine.Run()
+            self.MathEngine.run_menu()
         elif self.ObjRenderButton.Draw(self.screen):
             self.ObjRender.Run()
         elif self.AlgVizButton.Draw(self.screen):

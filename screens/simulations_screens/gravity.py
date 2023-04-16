@@ -17,7 +17,7 @@ class Gravity:
         self.running = True
 
         self.h0 = 500 # Initial heights in pixel
-        self.m = 25 # Mass in kilograms
+        self.m = 5 # Mass in kilograms
         self.g = 9.8 # Acceleration due to gravity in m/s^2
         self.dt = 0.1  # Time steps in seconds
         self.v = 0  # Initial velocity in pixel/second
