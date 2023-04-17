@@ -35,26 +35,11 @@ class Button:
         if self.rect.collidepoint(m_pos):
             self.color = self.hover_color
             if pygame.mouse.get_pressed()[0]:
-                print("AAAAAAAAAAA")
                 self.color = (175,25, 175)
                 action = True   
         else:
             self.color = self.initial_color
         return action
-        # action = False
-        # m_pos = pygame.mouse.get_pos()
-        # # check mouseover and clicked conditions
-        # if self.rect.collidepoint(m_pos):
-        #     self.color = self.hover_color
-        #     if pygame.mouse.get_pressed()[0] == True:
-        #         self.color = (255, 255, 0)
-        #         action = True
-        #         self.isClicked = True
-        # else:
-        #     self.color = self.initial_color
-        # if pygame.mouse.get_pressed()[0] == 0:
-        #     self.clicked = False
-        
     
     def Draw(self, screen):
         action = self.Update()

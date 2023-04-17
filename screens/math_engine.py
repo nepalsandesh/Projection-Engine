@@ -1,6 +1,6 @@
 import pygame 
 from ui import Button
-from screens.MathEngine.trigonometry import trigonometry
+
 
 class MathEngine:
     def __init__(self, screen, resolution, clock, FPS=60):
@@ -16,6 +16,7 @@ class MathEngine:
         
         # BUTTONS
         self.TrigonometryButton = Button(self.WIDTH//2 - 100, self.HEIGHT//3, 350, 60, "Trigonometry Visualization")
+        self.FunctionVisualizationButton = Button(self.WIDTH//2 - 100, self.HEIGHT//3+100, 350, 60, "Function Visualization")
              
         
     def clear_screen(self):
@@ -30,24 +31,28 @@ class MathEngine:
                     self.running = False
                 if event.key == pygame.K_BACKSPACE:
                     self.running = False  
-  
+                    
+    def displayMenu(self):
+        """Displays each buttons and runs the corresponding function if clicked"""
+        if self.TrigonometryButton.Draw(self.screen):
+            print("Trigonometry button clicked")
+        elif self.FunctionVisualizationButton.Draw(self.screen):
+            print("Function Visualizer clicked")
+ 
     
     def run_menu(self):
         while self.running:
             self.clock.tick(self.FPS)
             self.clear_screen()
             self.check_events()
-            
-            if self.TrigonometryButton.Draw(self.screen):
-                Trigonometry = trigonometry.Trigonometry()
-                if Trigonometry.running:
-                    Trigonometry.run()
-                
 
-            
+            self.displayMenu()
             pygame.display.update()
+            
+        self.running = True
+            
         
-        # setiing self.running to True because after exiting it would again be True for next time 
+        # setiing self.running to True because to make it would again be True for next time 
         
             
             

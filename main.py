@@ -37,6 +37,7 @@ class Render:
         self.screen.fill((0,0,0))
         
     def displayMenu(self):
+        """Displays each buttons and runs the corresponding function if clicked"""
         if self.SimulationButton.Draw(self.screen):
             self.Simulation.run_menu()
         elif self.MathEngineButton.Draw(self.screen):
