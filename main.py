@@ -3,6 +3,7 @@ from constants import *
 from ui import Button
 from screens.simulations import Simulation
 from screens.math_engine import MathEngine
+from screens.obj_renderer.render import SoftwareRender
 
 
 
@@ -29,6 +30,7 @@ class Render:
         # After Button Click
         self.Simulation = Simulation(self.screen, self.RESOLUTION, self.clock, self.FPS)
         self.MathEngine = MathEngine(self.screen, self.RESOLUTION, self.clock, self.FPS)
+        self.ObjEngine = SoftwareRender(self.screen, self.RESOLUTION, self.clock, self.FPS)
         
         
         
@@ -43,7 +45,7 @@ class Render:
         elif self.MathEngineButton.Draw(self.screen):
             self.MathEngine.run_menu()
         elif self.ObjRenderButton.Draw(self.screen):
-            self.ObjRender.Run()
+            self.ObjEngine.run()
         elif self.AlgVizButton.Draw(self.screen):
             self.AlgViz.Run()
         elif self.GamesButton.Draw(self.screen):
