@@ -1,5 +1,6 @@
 import pygame 
 from ui import Button
+from screens.MathEngine.Calculus_Engine.calculus_engine import Render
 
 
 class MathEngine:
@@ -16,7 +17,10 @@ class MathEngine:
         
         # BUTTONS
         self.TrigonometryButton = Button(self.WIDTH//2 - 100, self.HEIGHT//3, 350, 60, "Trigonometry Visualization")
-        self.FunctionVisualizationButton = Button(self.WIDTH//2 - 100, self.HEIGHT//3+100, 350, 60, "Function Visualization")
+        self.CalculusButton = Button(self.WIDTH//2 - 100, self.HEIGHT//3 + 100, 350, 60, "Calculus Engine")
+        
+        # Engines
+        self.CalculusEngine = Render(self.resolution, 20, self.screen, self.clock, self.FPS)
              
         
     def clear_screen(self):
@@ -36,8 +40,8 @@ class MathEngine:
         """Displays each buttons and runs the corresponding function if clicked"""
         if self.TrigonometryButton.Draw(self.screen):
             print("Trigonometry button clicked")
-        elif self.FunctionVisualizationButton.Draw(self.screen):
-            print("Function Visualizer clicked")
+        elif self.CalculusButton.Draw(self.screen):
+            self.CalculusEngine.run()
  
     
     def run_menu(self):
