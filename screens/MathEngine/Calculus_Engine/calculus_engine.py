@@ -15,6 +15,7 @@ class Render:
         self.clock = clock
         self.FPS = FPS
         self.SCALE = SCALE
+        self.running = True
         
         self.func = WindowCoordinante((1920,1080), self.SCALE, "sin(x)", np.linspace(-50,50,1001))
         self.pause = False
@@ -41,12 +42,12 @@ class Render:
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit()
-                exit()
+                self.running = False
+                
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    pygame.quit()
-                    exit() 
+                    self.running = False
+
                 if event.key == pygame.K_p:
                     self.pause = True if self.pause==False else False
                     
@@ -107,7 +108,7 @@ class Render:
         
         
     def run(self):
-        while True:
+        while self.running:
             self.clock.tick()
             self.screen.fill((0,0,0))
             pygame.display.set_caption(str(np.round(self.clock.get_fps())))
@@ -125,6 +126,7 @@ class Render:
             panel.get_hover_status()
 
             pygame.display.flip()
+        self.running = True
     
 
         
