@@ -1,5 +1,9 @@
 import math
+import numpy as np
 import pygame
+from .parameters import mass1, mass2, theta1, theta2, theta1_value,  theta2_value, length1, length2
+from .ui import Panel
+
         
 
 class DoublePendulum:
@@ -47,6 +51,8 @@ class DoublePendulum:
         self.x_offset = self.starting_point[0]
         self.y_offset = self.starting_point[1]
         self.run = True
+              
+        self.ui_panel = Panel()
         
         
     def FirstAcceleration(self,t1, t2, m1, m2, L1, L2, G, v1, v2):
@@ -75,7 +81,17 @@ class DoublePendulum:
     
     def draw_curve(self, coordinates, color):
         if len(coordinates) > 2:
-            pygame.draw.lines(self.screen, color, False, coordinates, 4)
+            pygame.draw.lines(self.screen, color, False, coordinates, 2)
+            
+    def draw_ui(self):
+        self.ui_panel.render(self.screen)
+        mass1.render(self.screen, str(self.mass1))
+        mass2.render(self.screen, str(self.mass2))
+        theta1.render(self.screen, "")
+        theta1_value.render(self.screen, str(np.round(self.angle1 * 180/math.pi)))
+        theta2.render(self.screen, "")
+        theta2_value.render(self.screen, str(np.round(self.angle2 * 180/math.pi)))
+        length1.render(self.screen, str(self.length1))
             
     def render(self):
         while self.run:
@@ -101,7 +117,7 @@ class DoublePendulum:
                 self.angle_velocity2 = 0
                 self.angle_acceleration1 = 0
                 self.angle_acceleration2 = 0
-                self.Gravity = 0.1
+                self.Gravity = 9.8
                 self.scatter1 = []
                 self.scatter2 = []
                 self.restart = False
@@ -126,7 +142,7 @@ class DoublePendulum:
             self.scatter1.append((x1, y1))
             self.scatter2.append((x2, y2))
             
-            self.draw_curve(self.scatter2, (155,155,200))
+            self.draw_curve(self.scatter2, (55,55,100))
 
 
             
@@ -135,6 +151,8 @@ class DoublePendulum:
             pygame.draw.line(self.screen, self.PENDULUMARM, (x1, y1), (x2, y2),6)
             pygame.draw.circle(self.screen, self.MAINPOINT, (x1, y1), 15)
             pygame.draw.circle(self.screen, self.MAINPOINT, (x2, y2), 15)
+            
+            self.draw_ui()
             
                 
             pygame.display.update()
