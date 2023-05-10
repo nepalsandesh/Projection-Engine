@@ -38,11 +38,12 @@ class TextUI:
         self.fontSize = 20
         self.font = 'freesansbold.ttf'
         
-    def render(self, screen, value):
+    def render(self, screen, value=""):
         """method for rendering the text"""
         font = pygame.font.Font(self.font, self.fontSize)
         text = font.render(self.text + value, True, self.fontColor)
         textRect = text.get_rect()
+        textRect.left, textRect.top = self.position[0], self.position[1]
         setattr(textRect, self.anchor, self.position)
         screen.blit(text, textRect)
         
@@ -71,12 +72,13 @@ class Button:
             self.color = self.hover_color
             if pygame.mouse.get_pressed()[0]:
                 self.color = (175,25, 175)
-                self.clicked = True if self.clicked==False else False   
+                action = True   
         else:
             self.color = self.initial_color
-        return self.clicked
+        return action
     
     def render(self, screen):
+        """render button and returns boolean flag, ie either pressed or not"""
         action = self.Update()
         pygame.draw.rect(screen, self.color, self.rect)
         font = pygame.font.Font('freesansbold.ttf', self.font_size)

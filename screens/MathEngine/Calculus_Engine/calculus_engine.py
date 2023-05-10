@@ -66,20 +66,20 @@ class Render:
                 
                 
     def draw(self):
-        pygame.draw.line(self.screen, (55,55,55), (0, self.HEIGHT//2), (1920, self.HEIGHT//2), 1)   # x-axis
-        pygame.draw.line(self.screen, (55,55,55), (self.WIDTH//2, 0), (self.WIDTH//2, self.HEIGHT), 1)   # y-axis
+        pygame.draw.line(self.screen, (55,55,55), (0, self.HEIGHT//2), (1920, self.HEIGHT//2), 3)   # x-axis
+        pygame.draw.line(self.screen, (55,55,55), (self.WIDTH//2, 0), (self.WIDTH//2, self.HEIGHT), 3)   # y-axis
         
-        pygame.draw.lines(self.screen, (50, 50, 100), False, self.func.get_function_coordinates(), 2)   # function curve
+        pygame.draw.lines(self.screen, (50, 50, 100), False, self.func.get_function_coordinates(), 5)   # function curve
 
         
         if self.display_tangent:
-            pygame.draw.lines(self.screen, (105,105,15), False, self.func.get_tangent_coordinates(self.x_point), 2)  # tangent line
+            pygame.draw.lines(self.screen, (105,105,15), False, self.func.get_tangent_coordinates(self.x_point), 5)  # tangent line
             self.tangent_point = self.func.get_tangent_point(self.x_point)
             if self.tangent_point[0] >= 0 and self.tangent_point[0] <= self.WIDTH:
                 pygame.draw.circle(self.screen, (255,155,155), self.tangent_point, 7)   # tangent point
             
         if self.display_derivative:
-            pygame.draw.lines(self.screen, (25, 50, 25), False, self.func.get_derivative_coordinates(), 1)   # derivative curve
+            pygame.draw.lines(self.screen, (25, 50, 25), False, self.func.get_derivative_coordinates(), 3)   # derivative curve
 
           
 
