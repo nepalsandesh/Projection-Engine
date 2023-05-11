@@ -50,3 +50,31 @@ class Button:
     def SetColor(self, new_color):
         self.color = new_color
         self.initial_color = new_color
+        
+        
+
+class Panel:
+    """Every Interaction Interface would be on top of panel layer"""
+    
+    def __init__(self, position=(1920-365, 20), w = 345, h = 500, color=(8,3,12), alpha=128):
+        self.position = position
+        self.w = w
+        self.h = h
+        self.color = color
+        self.alpha = alpha
+        self.rect = pygame.Rect(self.position[0], self.position[1], self.w, self.h)
+        
+    def render(self, screen):
+        s = pygame.Surface((self.w, self.h))
+        s.set_alpha(self.alpha)
+        s.fill(self.color)
+        screen.blit(s, self.position)
+        
+    def get_hover_status(self):
+        m_pos = pygame.mouse.get_pos()
+        if self.rect.collidepoint(m_pos):
+            self.color = (155,155,155)
+            return True
+        else:
+            self.color = (55,55,155)
+            return False        
