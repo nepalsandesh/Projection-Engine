@@ -44,8 +44,8 @@ class TextUI:
         text = font.render(self.text + value, True, self.fontColor)
         textRect = text.get_rect()
         textRect.left, textRect.top = self.position[0], self.position[1]
-        setattr(textRect, self.anchor, self.position)
-        screen.blit(text, textRect)
+        # setattr(textRect, self.anchor, self.position)
+        screen.blit(text, self.position)
         
         
 

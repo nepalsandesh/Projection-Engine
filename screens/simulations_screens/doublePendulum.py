@@ -3,7 +3,7 @@ import numpy as np
 import pygame
 from .parameters import mass1Index, mass2Index, length1Index, length2Index, \
     gravityIndex
-from .ui import Panel, Button
+from .ui import Panel, Button, TextUI
 
         
 
@@ -53,12 +53,13 @@ class DoublePendulum:
         self.y_offset = self.starting_point[1]
         self.run = True
               
-        self.ui_panel = Panel()
-        self.mass1Panel = Panel((self.ui_panel.position[0] + 250, self.ui_panel.position[1] + 40), 90, 30, (255,255,255), 150)
-        self.mass2Panel = Panel((self.ui_panel.position[0] + 250, self.ui_panel.position[1] + 80), 90, 30, (255,255,255), 150)
-        self.length1Panel = Panel((self.ui_panel.position[0] + 250, self.ui_panel.position[1] + 120), 90, 30, (255,255,255), 150)
-        self.length2Panel = Panel((self.ui_panel.position[0] + 250, self.ui_panel.position[1] + 160), 90, 30, (255,255,255), 150)
-        self.GravityPanel = Panel((self.ui_panel.position[0] + 250, self.ui_panel.position[1] + 200), 90, 30, (255,255,255), 150)
+        self.ui_panel = Panel(position=(1920-365+50, 20), w=300)
+        self.mass1Panel = Panel((self.ui_panel.position[0] + 175, self.ui_panel.position[1] + 40), 90, 30, (255,255,255), 150)
+        self.mass2Panel = Panel((self.ui_panel.position[0] + 175, self.ui_panel.position[1] + 80), 90, 30, (255,255,255), 150)
+        self.length1Panel = Panel((self.ui_panel.position[0] + 175, self.ui_panel.position[1] + 120), 90, 30, (255,255,255), 150)
+        self.length2Panel = Panel((self.ui_panel.position[0] + 175, self.ui_panel.position[1] + 160), 90, 30, (255,255,255), 150)
+        self.GravityPanel = Panel((self.ui_panel.position[0] + 175, self.ui_panel.position[1] + 200), 90, 30, (255,255,255), 150)
+               
         
         self.RunButton = Button(self.ui_panel.position[0] + 150, self.ui_panel.position[1] + 350, 80, 50, "RUN")
         
@@ -67,6 +68,12 @@ class DoublePendulum:
         self.length1Temp = str(self.length1)
         self.length2Temp = str(self.length2)
         self.GravityTemp = str(self.Gravity)
+        
+        self.mass1UI = TextUI(self.mass1Temp, (self.mass1Panel.position[0]+10, self.mass1Panel.position[1]+5), (255,255,255))
+        self.mass2UI = TextUI(self.mass2Temp, (self.mass2Panel.position[0]+10, self.mass2Panel.position[1]+5), (255,255,255))
+        self.length1UI = TextUI(self.length1Temp, (self.length1Panel.position[0]+10, self.length1Panel.position[1]+5), (255,255,255))
+        self.length2UI = TextUI(self.length2Temp, (self.length2Panel.position[0]+10, self.length2Panel.position[1]+5), (255,255,255))
+        self.GravityUI = TextUI(self.GravityTemp, (self.GravityPanel.position[0]+10, self.GravityPanel.position[1]+5), (255,255,255))
         
         
     def FirstAcceleration(self,t1, t2, m1, m2, L1, L2, G, v1, v2):
@@ -99,11 +106,13 @@ class DoublePendulum:
             
     def draw_ui(self):
         self.ui_panel.render(self.screen)
-        mass1Index.render(self.screen, str(self.mass1Temp))
-        mass2Index.render(self.screen, str(self.mass2Temp))
-        length1Index.render(self.screen, str(self.length1Temp))
-        length2Index.render(self.screen, str(self.length2Temp))
-        gravityIndex.render(self.screen, str(self.GravityTemp))
+        mass1Index.render(self.screen, "")  #str(self.mass1Temp)
+        mass2Index.render(self.screen, "")  #str(self.mass2Temp)
+        length1Index.render(self.screen, "")  #str(self.length1Temp)
+        length2Index.render(self.screen, "")  #str(self.length2Temp)
+        gravityIndex.render(self.screen, "") #str(self.GravityTemp)
+        
+        
         
         # theta1.render(self.screen, "")
         # theta1_value.render(self.screen, str(np.round(self.angle1 * 180/math.pi)))
@@ -126,6 +135,18 @@ class DoublePendulum:
         self.length1Panel.get_hover_status()
         self.length2Panel.get_hover_status()
         self.GravityPanel.get_hover_status()
+        
+        self.mass1UI.render(self.screen, "")
+        self.mass2UI.render(self.screen, "")
+        self.length1UI.render(self.screen, "")
+        self.length2UI.render(self.screen, "")
+        self.GravityUI.render(self.screen, "")
+        
+        self.mass1UI.text = str(self.mass1Temp)
+        self.mass2UI.text = str(self.mass2Temp)
+        self.length1UI.text = str(self.length1Temp)
+        self.length2UI.text = str(self.length2Temp)
+        self.GravityUI.text = str(self.GravityTemp)
         
            
     def render(self):
