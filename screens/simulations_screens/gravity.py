@@ -1,5 +1,5 @@
 import pygame 
-from ui import Panel
+from .ui import Panel, Button, TextUI
 
 class Gravity:
     """Gravity Simulator Class, renders with run() function"""
@@ -33,7 +33,16 @@ class Gravity:
         self.ground_color = (125, 125, 30)
         
         # UI 
-        self.UIpanel = Panel(position=(self.width-220,20), w=200, h=300, color=(255,255,255))
+        self.UIpanel = Panel(position=(self.width-320,20), w=300, h=300, color=(35,35,55))
+        
+        self.initial_height_index = TextUI("Initial Height : ", (self.UIpanel.position[0]+ 20, self.UIpanel.position[1]+20), (225, 255, 255))
+        self.mass_index = TextUI("Mass : ", (self.UIpanel.position[0]+ 20, self.UIpanel.position[1]+50), (225, 255, 255))
+        self.gravity_index = TextUI("Mass : ", (self.UIpanel.position[0]+ 20, self.UIpanel.position[1]+80), (225, 255, 255))
+        self.time_delta_index = TextUI("Time Delta : ", (self.UIpanel.position[0]+ 20, self.UIpanel.position[1]+110), (225, 255, 255))
+        self.initial_velocity_index = TextUI("Initial Velocity : ", (self.UIpanel.position[0]+ 20, self.UIpanel.position[1]+140), (225, 255, 255))
+        self.restitution_coef_index = TextUI("Restitution Coefficient : ", (self.UIpanel.position[0]+ 20, self.UIpanel.position[1]+170), (225, 255, 255))
+        self.radius_index = TextUI("Body Radius : ", (self.UIpanel.position[0]+ 20, self.UIpanel.position[1]+200), (225, 255, 255))
+        
 
 
         
@@ -49,7 +58,18 @@ class Gravity:
                     self.running = False  
                     
     def draw_ui(self):
+        # UI Panel
         self.UIpanel.render(self.screen)
+        
+        # text_indexes
+        self.initial_height_index.render(self.screen, '')
+        self.mass_index.render(self.screen, '')
+        self.gravity_index.render(self.screen, '')
+        self.time_delta_index.render(self.screen, '')
+        self.initial_velocity_index.render(self.screen, '')
+        self.restitution_coef_index.render(self.screen, '')
+        self.radius_index.render(self.screen, '')
+        
     
     
     def update_ui(self):
@@ -70,7 +90,7 @@ class Gravity:
             # calculate acceleration
             a = F / self.m
             # Update velocity
-            self.v -= a * self.dt
+            self.v -= a * self.dt   # substracted because of y-axis flip in window system
             # Update position 
             self.y += self.v * self.dt
             self.mass_pos = (self.width // 2 - self.mass_size // 2, self.height - self.y - self.mass_size // 2 - self.ground_height)  
