@@ -4,6 +4,8 @@ from ui import Button
 from screens.simulations import Simulation
 from screens.math_engine import MathEngine
 from screens.obj_renderer.render import SoftwareRender
+from screens.obj_renderer.object_loader import run as load
+
 
 
 
@@ -14,7 +16,7 @@ class Render:
         self.WIDTH = 1920
         self.HEIGHT = 1080
         self.RESOLUTION = (self.WIDTH, self.HEIGHT)
-        self.screen = pygame.display.set_mode(self.RESOLUTION)
+        self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
         self.clock = pygame.time.Clock()
         self.FPS = 60
         self.running = True
@@ -27,10 +29,11 @@ class Render:
         self.AlgVizButton = Button(WIDTH//4 - 100, self.HEIGHT//10 + 400 , 300, 60, "Algorithms Visualization")
         self.GamesButton = Button(WIDTH//4 - 100, self.HEIGHT//10 + 500 , 300, 60, "Games")
         
+        
         # After Button Click
         self.Simulation = Simulation(self.screen, self.RESOLUTION, self.clock, self.FPS)
         self.MathEngine = MathEngine(self.screen, self.RESOLUTION, self.clock, self.FPS)
-        self.ObjEngine = SoftwareRender(self.screen, self.RESOLUTION, self.clock, self.FPS)
+        # self.ObjEngine = SoftwareRender(self.screen, self.RESOLUTION, self.clock, self.FPS)
         
         
         
@@ -45,7 +48,8 @@ class Render:
         elif self.MathEngineButton.Draw(self.screen):
             self.MathEngine.run_menu()
         elif self.ObjRenderButton.Draw(self.screen):
-            self.ObjEngine.run()
+            load(self.screen, self.RESOLUTION, self.clock, self.FPS)
+            # self.ObjEngine.run()
         elif self.AlgVizButton.Draw(self.screen):
             self.AlgViz.Run()
         elif self.GamesButton.Draw(self.screen):

@@ -6,21 +6,22 @@ from .projection import Projection
 
 class SoftwareRender:
     """The main rendering class"""
-    def __init__(self, screen, resolution, clock, FPS):
+    def __init__(self, screen, resolution, clock, FPS, filename):
         pg.init()
-        self.RES = self.WIDTH, self.HEIGHT = 1920, 1080
+        self.RES = self.WIDTH, self.HEIGHT = resolution
         self.H_WIDTH, self.H_HEIGHT = self.WIDTH//2, self.HEIGHT//2
-        self.FPS = 60
-        self.screen = pg.display.set_mode(self.RES)
-        self.clock = pg.time.Clock()
-        self.create_objects()
+        self.FPS = FPS
+        self.screen = screen
+        self.clock = clock
         self.running = True
+        self.filename = filename
+        self.create_objects()
         
         
     def create_objects(self):
         self.camera = Camera(self, [-5, 5, -50])
         self.projection = Projection(self)
-        self.object = self.get_object_from_file('resources/tank.obj')
+        self.object = self.get_object_from_file('resources/' + self.filename)
 
         
     def get_object_from_file(self, filename):

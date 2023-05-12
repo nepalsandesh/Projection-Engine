@@ -34,7 +34,6 @@ class Chaos:
         self.ClearScreen()
 
         while self.running:
-            print("secondary loop : Chaos")
             self.clock.tick(self.fps)
             self.HandleEvent()
 
