@@ -1,5 +1,5 @@
 import pygame 
-
+from ui import Panel
 
 class Gravity:
     """Gravity Simulator Class, renders with run() function"""
@@ -9,7 +9,7 @@ class Gravity:
         self.black = (0,0,0)
         self.blue = (0,0, 255)
 
-        self.resolution = self.screen_width, self.screen_height = resolution
+        self.resolution = self.width, self.height = resolution
         self.screen = screen
         pygame.display.set_caption('Gravity Simulator')
         self.clock = clock
@@ -26,11 +26,15 @@ class Gravity:
         
         # Set up the simulation objects
         self.mass_size = self.m * 2  # Diameter of mass in pixels
-        self.mass_pos = (self.screen_width // 2 - self.mass_size // 2, self.screen_height - self.y - self.mass_size // 2)
+        self.mass_pos = (self.width // 2 - self.mass_size // 2, self.height - self.y - self.mass_size // 2)
         self.ground_height = 100 # Height of the ground in pixels
-        self.ground_pos = (0, self.screen_height - self.ground_height)
+        self.ground_pos = (0, self.height - self.ground_height)
         self.mass_color = (100,100,255)
         self.ground_color = (125, 125, 30)
+        
+        # UI 
+        self.UIpanel = Panel(position=(self.width-220,20), w=200, h=300, color=(255,255,255))
+
 
         
     
@@ -43,6 +47,13 @@ class Gravity:
                     self.running = False  
                 if event.key == pygame.K_BACKSPACE:
                     self.running = False  
+                    
+    def draw_ui(self):
+        self.UIpanel.render(self.screen)
+    
+    
+    def update_ui(self):
+        pass
     
         
     def run(self):
@@ -62,7 +73,7 @@ class Gravity:
             self.v -= a * self.dt
             # Update position 
             self.y += self.v * self.dt
-            self.mass_pos = (self.screen_width // 2 - self.mass_size // 2, self.screen_height - self.y - self.mass_size // 2 - self.ground_height)  
+            self.mass_pos = (self.width // 2 - self.mass_size // 2, self.height - self.y - self.mass_size // 2 - self.ground_height)  
             # Check for collision with ground
             if self.y <= 0:
                 # Update position and velocity based on coefficient of restitution
@@ -72,10 +83,12 @@ class Gravity:
             # Render simulation
             
             # draw the ground
-            pygame.draw.rect(self.screen, self.ground_color, (self.ground_pos[0], self.ground_pos[1], self.screen_width, self.ground_height))
-            
+            pygame.draw.rect(self.screen, self.ground_color, (self.ground_pos[0], self.ground_pos[1], self.width, self.ground_height))
             # draw the mass
             pygame.draw.circle(self.screen, self.mass_color, self.mass_pos, self.mass_size//2)
+            
+            self.draw_ui()
+            self.update_ui()
             
             pygame.display.update()
             

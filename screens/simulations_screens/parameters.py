@@ -9,5 +9,3 @@ length2Index = TextUI("Length-2 : ", (1605+20,185), (255,255,255,15))
 gravityIndex = TextUI("Gravity : ", (1605+20,225), (255,255,255,15))
 
 
-
-
