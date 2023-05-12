@@ -84,6 +84,6 @@ class Button:
         font = pygame.font.Font('freesansbold.ttf', self.font_size)
         text = font.render(self.text, True, self.text_color)
         textRect = text.get_rect()
-        (textRect.x, textRect.y) = self.rect.x+8, self.rect.y+5
+        (textRect.x, textRect.y) = self.rect.x+18, self.rect.y+15
         screen.blit(text, textRect)
         return action

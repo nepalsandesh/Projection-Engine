@@ -1,7 +1,7 @@
 from .ui import TextUI,  Panel, Button
 import pygame
 
-
+# These are Text UI instances of double pendulum
 mass1Index = TextUI("Mass-1 : ", (1605+20,65), (255,255,255,15))
 mass2Index = TextUI("Mass-2 : ", (1605+20,105), (255,255,255,15))
 length1Index = TextUI("Length-1 : ", (1605+20,145), (255,255,255,15))

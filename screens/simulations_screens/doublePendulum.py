@@ -53,7 +53,7 @@ class DoublePendulum:
         self.y_offset = self.starting_point[1]
         self.run = True
               
-        self.ui_panel = Panel(position=(1920-365+50, 20), w=300)
+        self.ui_panel = Panel(position=(1920-365+50, 20), w=300, h=300)
         self.mass1Panel = Panel((self.ui_panel.position[0] + 175, self.ui_panel.position[1] + 40), 90, 30, (255,255,255), 150)
         self.mass2Panel = Panel((self.ui_panel.position[0] + 175, self.ui_panel.position[1] + 80), 90, 30, (255,255,255), 150)
         self.length1Panel = Panel((self.ui_panel.position[0] + 175, self.ui_panel.position[1] + 120), 90, 30, (255,255,255), 150)
@@ -61,7 +61,7 @@ class DoublePendulum:
         self.GravityPanel = Panel((self.ui_panel.position[0] + 175, self.ui_panel.position[1] + 200), 90, 30, (255,255,255), 150)
                
         
-        self.RunButton = Button(self.ui_panel.position[0] + 150, self.ui_panel.position[1] + 350, 80, 50, "RUN")
+        self.RunButton = Button(self.ui_panel.position[0] + 120, self.ui_panel.position[1] + 240, 80, 50, "RUN")
         
         self.mass1Temp = str(self.mass1)
         self.mass2Temp = str(self.mass2)
