@@ -28,10 +28,25 @@ class Render:
         self.input_text = self.func.expression
         
         # UI 
-        self.functionText = TextUI(self.input_text, (panel.position[0] + 50, panel.position[1] + 15), (205, 75, 205), "topleft")
-        self.derivativeText = TextUI(str(self.func.df), (panel.position[0] + 70, panel.position[1] + 35), (205, 75, 205), "topleft")
-        self.tangentPointText = TextUI(str(self.tangent_point), (panel.position[0] + 110, panel.position[1] + 55), (205, 75, 205), "topleft")  
+        # UI paraeter
+        self.panel = Panel(position = (Width-300, 15), w= 500, h= 150, color=(55, 55, 155), alpha=50)
+
+
+# Text UI
+        self.functionIndex = TextUI("f(x) = ", (self.panel.position[0] + 15, self.panel.position[1] + 15), (255, 255, 255), "topleft")
+        self.derivativeIndex = TextUI("f'(x) = ", (self.panel.position[0] + 15, self.panel.position[1] + 50), (255, 255, 255), "topleft")
+        self.tangentIndex = TextUI("tangent at :", (30, 30), (255, 255, 255), "topleft")
+
+        self.functionIndex.fontSize = 25
+        self.derivativeIndex.fontSize = 25
         
+        self.functionPanel = Panel((self.panel.position[0] + 85, self.panel.position[1] + 15), 200, 30, (155,155,155))
+        
+        self.functionText = TextUI(self.input_text, (self.functionPanel.position[0] + 20, self.functionPanel.position[1] + 5), (255, 255, 255))
+        self.derivativeText = TextUI(str(self.func.df), (self.functionText.position[0] , self.functionText.position[1] + 30), (255, 255, 255))
+        self.tangentPointText = TextUI(str(self.tangent_point), (self.tangentIndex.position[0] + 100 , self.tangentIndex.position[1]), (255, 255, 255))  
+        
+        self.functionText.fontSize = 20
         
     def handle_events(self):
         keys = pygame.key.get_pressed()
@@ -57,7 +72,7 @@ class Render:
                 if event.key == pygame.K_t:
                     self.display_tangent = True if self.display_tangent==False else False
                     
-                if panel.get_hover_status():
+                if self.functionPanel.get_hover_status():
                     if event.key == pygame.K_BACKSPACE:
                         self.input_text = self.input_text[0:-1]
                         
@@ -85,10 +100,12 @@ class Render:
 
     def draw_interaction_panel(self):
         """A function for Interaction."""
-        panel.render(self.screen)
-        functionText.render(self.screen)
-        derivativeText.render(self.screen)
-        tangentAt.render(self.screen)
+        self.panel.render(self.screen)
+        self.functionPanel.render(self.screen)
+        
+        self.functionIndex.render(self.screen)
+        self.derivativeIndex.render(self.screen)
+        self.tangentIndex.render(self.screen)
         self.functionText.render(self.screen)
         self.derivativeText.render(self.screen)
         
@@ -99,7 +116,7 @@ class Render:
         
     def update_parameters(self):
         self.functionText.text = self.input_text
-        run_button = Button(panel.position[0]+20, panel.position[1]+80, 60, 30, 'RUN').render(self.screen)
+        run_button = Button(self.panel.position[0]+20, self.panel.position[1]+110, 60, 30, 'RUN').render(self.screen)
         if run_button:
             self.func = WindowCoordinante((1920,1080), self.SCALE, str(self.input_text), np.linspace(-50,50,1001))
             self.derivativeText.text = str(self.func.df)
@@ -123,7 +140,7 @@ class Render:
                 self.x_point += 0.01
 
             self.update_parameters()
-            panel.get_hover_status()
+            self.panel.get_hover_status()
 
             pygame.display.flip()
         self.running = True
@@ -133,14 +150,14 @@ class Render:
 
 
 
-if __name__ == "__main__":
-    width = 1920
-    height = 1080
-    resolution = (width, height)
-    pygame.init()
-    screen = pygame.display.set_mode(resolution)
-    pygame.display.set_caption("Calculus Engine")
-    clock = pygame.time.Clock()
-    FPS = 60
-    app = Render(resolution, 20, screen, clock, FPS)
-    app.run()
+# if __name__ == "__main__":
+#     width = 1920
+#     height = 1080
+#     resolution = (width, height)
+#     pygame.init()
+#     screen = pygame.display.set_mode(resolution)
+#     pygame.display.set_caption("Calculus Engine")
+#     clock = pygame.time.Clock()
+#     FPS = 60
+#     app = Render(resolution, 20, screen, clock, FPS)
+#     app.run()

@@ -42,9 +42,9 @@ class TextUI:
         """method for rendering the text"""
         font = pygame.font.Font(self.font, self.fontSize)
         text = font.render(self.text, True, self.fontColor)
-        textRect = text.get_rect()
-        setattr(textRect, self.anchor, self.position)
-        screen.blit(text, textRect)
+        # textRect = text.get_rect()
+        # setattr(textRect, self.anchor, self.position)
+        screen.blit(text, self.position)
         
         
 
