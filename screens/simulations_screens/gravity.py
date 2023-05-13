@@ -33,15 +33,25 @@ class Gravity:
         self.ground_color = (125, 125, 30)
         
         # UI 
-        self.UIpanel = Panel(position=(self.width-320,20), w=300, h=300, color=(35,35,55))
+        self.UIpanel = Panel(position=(self.width-420,20), w=400, h=300, color=(35,35,55))
         
         self.initial_height_index = TextUI("Initial Height : ", (self.UIpanel.position[0]+ 20, self.UIpanel.position[1]+20), (225, 255, 255))
         self.mass_index = TextUI("Mass : ", (self.UIpanel.position[0]+ 20, self.UIpanel.position[1]+50), (225, 255, 255))
-        self.gravity_index = TextUI("Mass : ", (self.UIpanel.position[0]+ 20, self.UIpanel.position[1]+80), (225, 255, 255))
+        self.gravity_index = TextUI("Gravity : ", (self.UIpanel.position[0]+ 20, self.UIpanel.position[1]+80), (225, 255, 255))
         self.time_delta_index = TextUI("Time Delta : ", (self.UIpanel.position[0]+ 20, self.UIpanel.position[1]+110), (225, 255, 255))
         self.initial_velocity_index = TextUI("Initial Velocity : ", (self.UIpanel.position[0]+ 20, self.UIpanel.position[1]+140), (225, 255, 255))
         self.restitution_coef_index = TextUI("Restitution Coefficient : ", (self.UIpanel.position[0]+ 20, self.UIpanel.position[1]+170), (225, 255, 255))
         self.radius_index = TextUI("Body Radius : ", (self.UIpanel.position[0]+ 20, self.UIpanel.position[1]+200), (225, 255, 255))
+        
+        self.RunButton = Button(self.UIpanel.position[0] + 20, self.UIpanel.position[1] + 230, 75, 50, "RUN")
+        
+        self.initialHeightPanel = Panel((self.UIpanel.position[0] + 300, self.initial_height_index.position[1]), 50, 25, (155,155,255))
+        self.massPanel = Panel((self.UIpanel.position[0] + 300, self.mass_index.position[1]), 50, 25, (155,155,255))
+        self.gravityPanel = Panel((self.UIpanel.position[0] + 300, self.gravity_index.position[1]), 50, 25, (155,155,255))
+        self.timeDeltaPanel = Panel((self.UIpanel.position[0] + 300, self.time_delta_index.position[1]), 50, 25, (155,155,255))
+        self.initialVelocityPanel = Panel((self.UIpanel.position[0] + 300, self.initial_velocity_index.position[1]), 50, 25, (155,155,255))
+        self.restitutionPanel = Panel((self.UIpanel.position[0] + 300, self.restitution_coef_index.position[1]), 50, 25, (155,155,255))
+        self.radiusPanel = Panel((self.UIpanel.position[0] + 300, self.radius_index.position[1]), 50, 25, (155,155,255))
         
 
 
@@ -61,7 +71,7 @@ class Gravity:
         # UI Panel
         self.UIpanel.render(self.screen)
         
-        # text_indexes
+        # render text_indexes
         self.initial_height_index.render(self.screen, '')
         self.mass_index.render(self.screen, '')
         self.gravity_index.render(self.screen, '')
@@ -69,6 +79,26 @@ class Gravity:
         self.initial_velocity_index.render(self.screen, '')
         self.restitution_coef_index.render(self.screen, '')
         self.radius_index.render(self.screen, '')
+                    
+        self.RunButton.render(self.screen)
+        
+        # render values panel
+        self.initialHeightPanel.render(self.screen)
+        self.massPanel.render(self.screen)
+        self.gravityPanel.render(self.screen)
+        self.timeDeltaPanel.render(self.screen)
+        self.initialVelocityPanel.render(self.screen)
+        self.restitutionPanel.render(self.screen)
+        self.radiusPanel.render(self.screen)
+        
+        # get hover status of values panel
+        self.initialHeightPanel.get_hover_status()
+        self.massPanel.get_hover_status()
+        self.gravityPanel.get_hover_status()
+        self.timeDeltaPanel.get_hover_status()
+        self.initialVelocityPanel.get_hover_status()
+        self.restitutionPanel.get_hover_status()
+        self.radiusPanel.get_hover_status()
         
     
     
