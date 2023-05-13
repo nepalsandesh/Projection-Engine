@@ -1,5 +1,6 @@
 import pygame 
 from .ui import Panel, Button, TextUI
+import numpy as np
 
 class Gravity:
     """Gravity Simulator Class, renders with run() function"""
@@ -16,13 +17,13 @@ class Gravity:
         self.FPS = 60
         self.running = True
 
-        self.h0 = 500 # Initial heights in pixel
+        self.h0 = 1000 # Initial heights in pixel
         self.m = 5 # Mass in kilograms
         self.g = 9.8 # Acceleration due to gravity in m/s^2
         self.dt = 0.1  # Time steps in seconds
         self.v = 0  # Initial velocity in pixel/second
         self.y = self.h0  # Initial position in pixels
-        self.e = 0.8  # Coefficients of restitution      
+        self.e = 0.5  # Coefficients of restitution      
         
         # Set up the simulation objects
         self.mass_size = self.m * 2  # Diameter of mass in pixels
@@ -53,7 +54,22 @@ class Gravity:
         self.restitutionPanel = Panel((self.UIpanel.position[0] + 300, self.restitution_coef_index.position[1]), 50, 25, (155,155,255))
         self.radiusPanel = Panel((self.UIpanel.position[0] + 300, self.radius_index.position[1]), 50, 25, (155,155,255))
         
-
+        self.h0Temp = str(self.h0)
+        self.mTemp = str(self.m)
+        self.gTemp = str(self.g)
+        self.dtTemp = str(self.dt)
+        self.v0Temp = str(self.v)
+        self.eTemp = str(self.e)
+        self.radiusTemp = str(self.mTemp)
+        
+        # instances of displaying values whic can be modified by text input
+        self.initialHeightUI = TextUI(self.h0Temp, (self.initialHeightPanel.position[0] + 10, self.initialHeightPanel.position[1]), (255,255,255))
+        self.massUI = TextUI(self.mTemp, (self.massPanel.position[0] + 10, self.massPanel.position[1]), (255,255,255))
+        self.gravityUI = TextUI(self.gTemp, (self.gravityPanel.position[0] + 10, self.gravityPanel.position[1]), (255,255,255))
+        self.timeDeltaUI = TextUI(self.dtTemp, (self.timeDeltaPanel.position[0] + 10, self.timeDeltaPanel.position[1]), (255,255,255))
+        self.initialVelocityUI = TextUI(self.v0Temp, (self.initialVelocityPanel.position[0] + 10, self.initialVelocityPanel.position[1]), (255,255,255))
+        self.restitutionUI = TextUI(self.eTemp, (self.restitutionPanel.position[0] + 10, self.restitutionPanel.position[1]), (255,255,255))
+        self.radiusUI = TextUI(self.radiusTemp, (self.radiusPanel.position[0] + 10, self.radiusPanel.position[1]), (255,255,255))
 
         
     
@@ -100,6 +116,14 @@ class Gravity:
         self.restitutionPanel.get_hover_status()
         self.radiusPanel.get_hover_status()
         
+        # rendering parameter values on the corresponding panel
+        self.initialHeightUI.render(self.screen)
+        self.massUI.render(self.screen)
+        self.gravityUI.render(self.screen)
+        self.timeDeltaUI.render(self.screen)
+        self.initialVelocityUI.render(self.screen)
+        self.restitutionUI.render(self.screen)
+        self.radiusUI.render(self.screen)
     
     
     def update_ui(self):
@@ -108,9 +132,11 @@ class Gravity:
         
     def run(self):
         """Main loop"""
+        Time = 0
         while self.running:
-            self.clock.tick(self.FPS)
+            self.clock.tick()
             self.screen.fill(self.black)
+            self.dt = 1/self.clock.get_fps()
             
             # Handle events
             self.handle_events()
@@ -140,5 +166,22 @@ class Gravity:
             self.draw_ui()
             self.update_ui()
             
+            
+            if self.RunButton.render(self.screen):
+                self.h0 = float(self.h0Temp)
+                self.m = float(self.mTemp)
+                self.g = float(self.gTemp)
+                self.dt = float(self.dtTemp)
+                self.v = float(self.v0Temp)
+                self.y = float(self.h0)
+                self.e = float(self.eTemp)
+                
+            TextUI("Height : " + (str(np.round(self.y, 3))), (15, 15), (255,255,255)).render(self.screen)
+            TextUI("Velocity : " + str(np.round(self.v, 3)), (15, 35), (255,255,255)).render(self.screen)
+            TextUI("Time : " + str(np.round(Time, 3)), (15, 55), (255,255,255)).render(self.screen)
+            TextUI("FPS : " + str(np.round(self.clock.get_fps(), 3)), (15, 75), (255,255,255)).render(self.screen)
+            Time += self.dt
+            
+            print(self.dt)
             pygame.display.update()
             

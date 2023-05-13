@@ -150,7 +150,6 @@ class DoublePendulum:
         
            
     def render(self):
-        a = 1
         while self.run:
     
             self.clock.tick(self.FPS) 
