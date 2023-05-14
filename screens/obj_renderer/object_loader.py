@@ -6,7 +6,7 @@ import glob
 from .render import SoftwareRender
 
 
-file_panel = Panel((1920/2-300, 1080/4), 600, 600, (25,25,155),alpha=50)
+file_panel = Panel((1920/2-300, 1080/4), 600, 600, (25,25,75),alpha=50)
 txt = TextUI("Click on any object to Render", (file_panel.position[0] +150, file_panel.position[1]-40), (50,125,125))
 
 files = glob.glob('resources/*.obj')

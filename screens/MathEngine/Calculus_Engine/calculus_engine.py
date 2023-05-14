@@ -36,7 +36,8 @@ class Render:
         self.functionIndex = TextUI("f(x) = ", (self.panel.position[0] + 15, self.panel.position[1] + 20), (255, 255, 255), "topleft")
         self.derivativeIndex = TextUI("df/dx = ", (self.panel.position[0] + 15, self.panel.position[1] + 60), (100, 200, 100), "topleft")
         self.tangentIndex = TextUI("tangent at :", (30, 30), (255, 255, 255), "topleft")
-        self.pressTIndex = TextUI("Press 'T' to show|hide tangent line", (self.tangentIndex.position[0], self.tangentIndex.position[1]+30), (145,145,15))
+        self.pressTIndex = TextUI("Press 'T' to show/hide tangent line", (self.tangentIndex.position[0], self.tangentIndex.position[1]+30), (200,200,75))
+        self.pressDIndex = TextUI("Press 'D' to show/hide Derivative function", (self.tangentIndex.position[0], self.tangentIndex.position[1]+60), (75, 200, 75))
 
         self.functionIndex.fontSize = 20
         self.derivativeIndex.fontSize = 20
@@ -45,10 +46,14 @@ class Render:
         
         self.functionText = TextUI(self.input_text, (self.functionPanel.position[0] + 20, self.functionPanel.position[1] + 5), (255, 255, 255))
         self.derivativeText = TextUI(str(self.func.df), (self.functionText.position[0] , self.derivativeIndex.position[1]), (100, 200, 100))
-        self.tangentPointText = TextUI(str(self.tangent_point), (self.tangentIndex.position[0] + 100 , self.tangentIndex.position[1]), (255,155,155))  
+        self.tangentPointText = TextUI(str(self.tangent_point), (self.tangentIndex.position[0] + 120 , self.tangentIndex.position[1]), (255,255,255))  
         
         self.functionText.fontSize = 20
         self.derivativeText.fontSize = 20
+        self.tangentIndex.fontSize = 20
+        self.pressTIndex.fontSize = 20
+        self.pressDIndex.fontSize = 20
+        self.tangentPointText.fontSize = 20
         
     def handle_events(self):
         keys = pygame.key.get_pressed()
@@ -86,7 +91,7 @@ class Render:
         pygame.draw.line(self.screen, (55,55,55), (0, self.HEIGHT//2), (1920, self.HEIGHT//2), 3)   # x-axis
         pygame.draw.line(self.screen, (55,55,55), (self.WIDTH//2, 0), (self.WIDTH//2, self.HEIGHT), 3)   # y-axis
         
-        pygame.draw.lines(self.screen, (50, 50, 200), False, self.func.get_function_coordinates(), 1)   # function curve
+        pygame.draw.lines(self.screen, (75, 75, 230), False, self.func.get_function_coordinates(), 1)   # function curve
 
         
         if self.display_tangent:
@@ -96,7 +101,7 @@ class Render:
                 pygame.draw.circle(self.screen, (255,155,155), self.tangent_point, 7)   # tangent point
             
         if self.display_derivative:
-            pygame.draw.lines(self.screen, (50, 150, 50), False, self.func.get_derivative_coordinates(), 1)   # derivative curve
+            pygame.draw.lines(self.screen, (75, 200, 75), False, self.func.get_derivative_coordinates(), 1)   # derivative curve
 
           
 
@@ -115,6 +120,7 @@ class Render:
         self.tangentPointText.text = tangent_point
         self.tangentPointText.render(self.screen)
         self.pressTIndex.render(self.screen)
+        self.pressDIndex.render(self.screen)
 
         
     def update_parameters(self):
