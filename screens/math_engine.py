@@ -38,10 +38,11 @@ class MathEngine:
                     
     def displayMenu(self):
         """Displays each buttons and runs the corresponding function if clicked"""
-        if self.TrigonometryButton.Draw(self.screen):
-            print("Trigonometry button clicked")
-        elif self.CalculusButton.Draw(self.screen):
+        if self.CalculusButton.Draw(self.screen):
             self.CalculusEngine.run()
+        elif self.TrigonometryButton.Draw(self.screen):
+            print("Trigonometry button clicked")
+
  
     
     def run_menu(self):

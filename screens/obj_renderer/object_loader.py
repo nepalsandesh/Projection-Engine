@@ -1,12 +1,13 @@
 from ui import Panel
-from screens.simulations_screens.ui import Button
+from screens.simulations_screens.ui import Button, Panel, TextUI
 import pygame
 import os
 import glob
 from .render import SoftwareRender
 
 
-file_panel = Panel((1920/2, 1080/4), 300, 400, (255,255,255))
+file_panel = Panel((1920/2-300, 1080/4), 600, 600, (25,25,155),alpha=50)
+txt = TextUI("Click on any object to Render", (file_panel.position[0] +150, file_panel.position[1]-40), (50,125,125))
 
 files = glob.glob('resources/*.obj')
 
@@ -21,9 +22,10 @@ def run(screen, resolution, clock, FPS):
                     return
         screen.fill((0,0,0)) 
         file_panel.render(screen)
+        txt.render(screen)
         for file in files:
             obj_file = (os.path.split(file))[1]            
-            b = Button(x, y, 200, 40, text=str(obj_file))
+            b = Button(x, y, 500, 40, text=str(obj_file))
             b.render(screen)
             y += 50
 

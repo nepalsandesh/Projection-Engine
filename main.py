@@ -43,17 +43,18 @@ class Render:
         
     def displayMenu(self):
         """Displays each buttons and runs the corresponding function if clicked"""
-        if self.SimulationButton.Draw(self.screen):
-            self.Simulation.run_menu()
-        elif self.MathEngineButton.Draw(self.screen):
+
+        if self.MathEngineButton.Draw(self.screen):
             self.MathEngine.run_menu()
+        elif self.SimulationButton.Draw(self.screen):
+            self.Simulation.run_menu()
         elif self.ObjRenderButton.Draw(self.screen):
             load(self.screen, self.RESOLUTION, self.clock, self.FPS)
             # self.ObjEngine.run()
-        elif self.AlgVizButton.Draw(self.screen):
-            self.AlgViz.Run()
-        elif self.GamesButton.Draw(self.screen):
-            self.Games.Run()
+        # elif self.AlgVizButton.Draw(self.screen):
+        #     self.AlgViz.Run()
+        # elif self.GamesButton.Draw(self.screen):
+        #     self.Games.Run()
     
     def check_events(self):
         for event in pygame.event.get():
