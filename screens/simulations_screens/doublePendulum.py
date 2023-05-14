@@ -2,7 +2,8 @@ import math
 import numpy as np
 import pygame
 from .parameters import mass1Index, mass2Index, length1Index, length2Index, \
-    gravityIndex
+    gravityIndex, pause_text, theta1_index, theta2_index, fps_Index,  curve_text
+    
 from .ui import Panel, Button, TextUI
 
         
@@ -52,6 +53,8 @@ class DoublePendulum:
         self.x_offset = self.starting_point[0]
         self.y_offset = self.starting_point[1]
         self.run = True
+        self.pause = False
+        self.position_curve = False
               
         self.ui_panel = Panel(position=(1920-365+50, 20), w=300, h=300)
         self.mass1Panel = Panel((self.ui_panel.position[0] + 175, self.ui_panel.position[1] + 40), 90, 30, (255,255,255), 150)
@@ -111,7 +114,11 @@ class DoublePendulum:
         length1Index.render(self.screen, "")  #str(self.length1Temp)
         length2Index.render(self.screen, "")  #str(self.length2Temp)
         gravityIndex.render(self.screen, "") #str(self.GravityTemp)
-        
+        pause_text.render(self.screen)
+        curve_text.render(self.screen)
+        theta1_index.render(self.screen, str(np.round(np.rad2deg(self.angle1)%360, 2)))
+        theta2_index.render(self.screen, str(np.round(np.rad2deg(self.angle2)%360, 2)))
+        fps_Index.render(self.screen, str(np.round(self.clock.get_fps(), 2)))
         
         
         # theta1.render(self.screen, "")
@@ -163,6 +170,12 @@ class DoublePendulum:
                         self.run = False
                     if event.key == pygame.K_r:
                         restart = True
+                    
+                    if event.key == pygame.K_SPACE:
+                        self.pause = True if self.pause == False else False
+                        
+                    if event.key == pygame.K_c:
+                        self.position_curve = not self.position_curve
                         
                     if self.mass1Panel.get_hover_status():
                         if event.key == pygame.K_BACKSPACE:
@@ -210,23 +223,25 @@ class DoublePendulum:
             # calculate the acceleration
             self.angle_acceleration1 = self.FirstAcceleration(self.angle1, self.angle2, self.mass1, self.mass2, self.length1, self.length2, self.Gravity, self.angle_velocity1, self.angle_velocity2)
             self.angle_acceleration2 = self.SecondAcceleration(self.angle1, self.angle2, self.mass1, self.mass2, self.length1, self.length2, self.Gravity, self.angle_velocity1, self.angle_velocity2)
-        
-            x1 = (self.length1 * math.sin(self.angle1) + self.x_offset)
-            y1 = float(self.length1 * math.cos(self.angle1) + self.y_offset)
-        
-            x2 = float(x1 + self.length2 * math.sin(self.angle2))
-            y2 = float(y1 + self.length2 * math.cos(self.angle2))
-        
-            # the angle varies with respect to velocity and velocity with respect to the acceleration 
-            self.angle_velocity1 += self.angle_acceleration1
-            self.angle_velocity2 += self.angle_acceleration2
-            self.angle1 += self.angle_velocity1
-            self.angle2 += self.angle_velocity2
+
+            if not self.pause:
+                x1 = (self.length1 * math.sin(self.angle1) + self.x_offset)
+                y1 = float(self.length1 * math.cos(self.angle1) + self.y_offset)
             
-            self.scatter1.append((x1, y1))
-            self.scatter2.append((x2, y2))
+                x2 = float(x1 + self.length2 * math.sin(self.angle2))
+                y2 = float(y1 + self.length2 * math.cos(self.angle2))
             
-            self.draw_curve(self.scatter2, (55,55,100))
+                # the angle varies with respect to velocity and velocity with respect to the acceleration 
+                self.angle_velocity1 += self.angle_acceleration1
+                self.angle_velocity2 += self.angle_acceleration2
+                self.angle1 += self.angle_velocity1
+                self.angle2 += self.angle_velocity2
+                
+                self.scatter1.append((x1, y1))
+                self.scatter2.append((x2, y2))
+            
+            if self.position_curve == True:
+                self.draw_curve(self.scatter2, (55,55,100))
 
 
             
