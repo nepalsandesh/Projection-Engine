@@ -33,7 +33,7 @@ class ConwaysGameOfLife:
         self.grid_array = np.random.randint(2, size=self.size)
         
         self.black = (0,0,0)
-        self.white = (0, 0, 0) # felt lazy so i converted here :)
+        self.white = (0, 0, 0) # felt lazy so I converted here :)
         self.dark_blue = (75, 220, 75)
         self.on_color = (155,155,155)
         self.off_color = (0,0,0)

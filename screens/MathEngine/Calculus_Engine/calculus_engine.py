@@ -3,8 +3,8 @@ import numpy as np
 from sympy import symbols, sin, cos, lambdify, diff
 from sympy.parsing.sympy_parser import parse_expr
 from .fx_and_dfx import FunctionAndDerivative, WindowCoordinante
-from .ui import TextUI,  Button
-from .parameters import *
+from .ui import TextUI,  Button, Panel
+
 
 class Render:
     """"Main class for starting and rendering a Calculus Engine"""
@@ -29,7 +29,7 @@ class Render:
         
         # UI 
         # UI paraeter
-        self.panel = Panel(position = (Width-300, 15), w= 500, h= 150, color=(55, 55, 155), alpha=50)
+        self.panel = Panel(position = (self.WIDTH-300, 15), w= 500, h= 150, color=(55, 55, 155), alpha=50)
 
 
 # Text UI
