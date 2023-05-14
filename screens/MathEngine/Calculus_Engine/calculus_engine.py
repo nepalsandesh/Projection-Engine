@@ -33,20 +33,22 @@ class Render:
 
 
 # Text UI
-        self.functionIndex = TextUI("f(x) = ", (self.panel.position[0] + 15, self.panel.position[1] + 15), (255, 255, 255), "topleft")
-        self.derivativeIndex = TextUI("f'(x) = ", (self.panel.position[0] + 15, self.panel.position[1] + 50), (255, 255, 255), "topleft")
+        self.functionIndex = TextUI("f(x) = ", (self.panel.position[0] + 15, self.panel.position[1] + 20), (255, 255, 255), "topleft")
+        self.derivativeIndex = TextUI("df/dx = ", (self.panel.position[0] + 15, self.panel.position[1] + 60), (100, 200, 100), "topleft")
         self.tangentIndex = TextUI("tangent at :", (30, 30), (255, 255, 255), "topleft")
+        self.pressTIndex = TextUI("Press 'T' to show|hide tangent line", (self.tangentIndex.position[0], self.tangentIndex.position[1]+30), (145,145,15))
 
-        self.functionIndex.fontSize = 25
-        self.derivativeIndex.fontSize = 25
+        self.functionIndex.fontSize = 20
+        self.derivativeIndex.fontSize = 20
         
         self.functionPanel = Panel((self.panel.position[0] + 85, self.panel.position[1] + 15), 200, 30, (155,155,155))
         
         self.functionText = TextUI(self.input_text, (self.functionPanel.position[0] + 20, self.functionPanel.position[1] + 5), (255, 255, 255))
-        self.derivativeText = TextUI(str(self.func.df), (self.functionText.position[0] , self.functionText.position[1] + 30), (255, 255, 255))
-        self.tangentPointText = TextUI(str(self.tangent_point), (self.tangentIndex.position[0] + 100 , self.tangentIndex.position[1]), (255, 255, 255))  
+        self.derivativeText = TextUI(str(self.func.df), (self.functionText.position[0] , self.derivativeIndex.position[1]), (100, 200, 100))
+        self.tangentPointText = TextUI(str(self.tangent_point), (self.tangentIndex.position[0] + 100 , self.tangentIndex.position[1]), (255,155,155))  
         
         self.functionText.fontSize = 20
+        self.derivativeText.fontSize = 20
         
     def handle_events(self):
         keys = pygame.key.get_pressed()
@@ -84,7 +86,7 @@ class Render:
         pygame.draw.line(self.screen, (55,55,55), (0, self.HEIGHT//2), (1920, self.HEIGHT//2), 3)   # x-axis
         pygame.draw.line(self.screen, (55,55,55), (self.WIDTH//2, 0), (self.WIDTH//2, self.HEIGHT), 3)   # y-axis
         
-        pygame.draw.lines(self.screen, (50, 50, 100), False, self.func.get_function_coordinates(), 2)   # function curve
+        pygame.draw.lines(self.screen, (50, 50, 200), False, self.func.get_function_coordinates(), 1)   # function curve
 
         
         if self.display_tangent:
@@ -94,7 +96,7 @@ class Render:
                 pygame.draw.circle(self.screen, (255,155,155), self.tangent_point, 7)   # tangent point
             
         if self.display_derivative:
-            pygame.draw.lines(self.screen, (25, 50, 25), False, self.func.get_derivative_coordinates(), 2)   # derivative curve
+            pygame.draw.lines(self.screen, (50, 150, 50), False, self.func.get_derivative_coordinates(), 1)   # derivative curve
 
           
 
@@ -112,6 +114,7 @@ class Render:
         tangent_point = ("(%f, %f)" %(self.x_point, self.func.f.subs(self.func.x, self.x_point)))
         self.tangentPointText.text = tangent_point
         self.tangentPointText.render(self.screen)
+        self.pressTIndex.render(self.screen)
 
         
     def update_parameters(self):

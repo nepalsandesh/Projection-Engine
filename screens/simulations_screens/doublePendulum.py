@@ -39,7 +39,7 @@ class DoublePendulum:
         self.LIST_LIMIT = 100
 
         # color variables
-        self.BACKGROUND = (20, 20, 20)
+        self.BACKGROUND = (0, 0, 0)
         self.SCATTERLINE1 = (55, 55, 55)
         self.SCATTERLINE2 = (55, 55, 0)
         self.MAINPOINT = (0, 255, 0)
