@@ -61,6 +61,7 @@ class Button:
         self.color = (25,25, 25)
         self.hover_color = (0, 50, 50)
         self.initial_color = self.color
+        self.clicked_color = (125,75,125)
         self.text_color = (155,155,0)
         self.anchor = "center"
         self.clicked = False
@@ -71,7 +72,7 @@ class Button:
         if self.rect.collidepoint(m_pos):
             self.color = self.hover_color
             if pygame.mouse.get_pressed()[0]:
-                self.color = (175,25, 175)
+                self.color = self.clicked_color
                 action = True   
         else:
             self.color = self.initial_color

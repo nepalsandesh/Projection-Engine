@@ -20,3 +20,31 @@ curve_text.fontSize = 18
 theta1_index.fontSize = 18
 theta2_index.fontSize = 18
 fps_Index.fontSize = 18
+
+
+# UI instances of Conway
+conway_panel = Panel(color=(30,30,55), w=275, h=300, position=(1920-285,10))
+scale_panel = Panel((conway_panel.position[0] + 90, conway_panel.position[1]+20), 80, 50, (55,155,155))
+conway_panel.alpha = 230
+
+scale_index = TextUI("Scale : ", (conway_panel.position[0]+15, conway_panel.position[1]+35), (255,255,255))
+scale_value = TextUI('', (scale_panel.position[0]+15, scale_panel.position[1]+15), (255,255,255))
+
+grid_shape_index = TextUI("Grid shape : ", (conway_panel.position[0]+15, conway_panel.position[1] + 90),(255,190,255))
+total_cells_index = TextUI("Total Cells : ", (conway_panel.position[0]+15, conway_panel.position[1] + 120),(255,190,255))
+alive_cells_index = TextUI("Total Alive Cells : ", (conway_panel.position[0]+15, conway_panel.position[1] + 150), (255,190,255))
+dead_cells_index = TextUI("Total Dead Cells : ", (conway_panel.position[0]+15, conway_panel.position[1] + 180), (255,190,255))
+fps = TextUI("FPS : ", (conway_panel.position[0]+15, conway_panel.position[1]+210), (255,190,255))
+pause_text_conway = TextUI("Press 'space' to pause", (conway_panel.position[0]+15, conway_panel.position[1]+250), (155,200,255))
+
+grid_shape_index.fontSize = 18
+total_cells_index.fontSize = 18
+alive_cells_index.fontSize = 18
+dead_cells_index.fontSize = 18
+fps.fontSize = 18
+
+
+
+RunButton = Button(conway_panel.position[0] + 180, conway_panel.position[1]+20, 80, 50, "RUN")
+RunButton.initial_color = (100,100,140)
+RunButton.text_color = (255,255, 255)
