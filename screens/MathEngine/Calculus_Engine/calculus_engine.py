@@ -29,31 +29,32 @@ class Render:
         
         # UI 
         # UI paraeter
-        self.panel = Panel(position = (self.WIDTH-300, 15), w= 500, h= 150, color=(55, 55, 155), alpha=50)
+        self.panel = Panel(position = (self.WIDTH-365, 15), w= 350, h= 150, color=(55, 55, 155), alpha=50)
 
 
 # Text UI
-        self.functionIndex = TextUI("f(x) = ", (self.panel.position[0] + 15, self.panel.position[1] + 20), (255, 255, 255), "topleft")
+        self.functionIndex = TextUI("f(x)  = ", (self.panel.position[0] + 15, self.panel.position[1] + 20), (255, 255, 255), "topleft")
         self.derivativeIndex = TextUI("df/dx = ", (self.panel.position[0] + 15, self.panel.position[1] + 60), (100, 200, 100), "topleft")
-        self.tangentIndex = TextUI("tangent at :", (30, 30), (255, 255, 255), "topleft")
+        self.tangentIndex = TextUI("tangent at :", (30, 30), (200,200,200), "topleft")
         self.pressTIndex = TextUI("Press 'T' to show/hide tangent line", (self.tangentIndex.position[0], self.tangentIndex.position[1]+30), (200,200,75))
-        self.pressDIndex = TextUI("Press 'D' to show/hide Derivative function", (self.tangentIndex.position[0], self.tangentIndex.position[1]+60), (75, 200, 75))
+        self.pressDIndex = TextUI("Press 'D' to show/hide Derivative function", (self.tangentIndex.position[0], self.tangentIndex.position[1]+50), (75, 200, 75))
+        self.pressPIndex = TextUI("Press 'P' to play/pause animation", (self.tangentIndex.position[0], self.tangentIndex.position[1]+70), (200, 200, 200))
 
         self.functionIndex.fontSize = 20
         self.derivativeIndex.fontSize = 20
         
-        self.functionPanel = Panel((self.panel.position[0] + 85, self.panel.position[1] + 15), 200, 30, (155,155,155))
+        self.functionPanel = Panel((self.panel.position[0] + 85, self.panel.position[1] + 15), 250, 30, (155,155,155))
         
         self.functionText = TextUI(self.input_text, (self.functionPanel.position[0] + 20, self.functionPanel.position[1] + 5), (255, 255, 255))
-        self.derivativeText = TextUI(str(self.func.df), (self.functionText.position[0] , self.derivativeIndex.position[1]), (100, 200, 100))
-        self.tangentPointText = TextUI(str(self.tangent_point), (self.tangentIndex.position[0] + 120 , self.tangentIndex.position[1]), (255,255,255))  
+        self.derivativeText = TextUI(str(self.func.df), (self.functionText.position[0] , self.derivativeIndex.position[1]+2), (100, 200, 100))
+        self.tangentPointText = TextUI(str(self.tangent_point), (self.tangentIndex.position[0] + 120 , self.tangentIndex.position[1]), (255,155,155))  
         
-        self.functionText.fontSize = 20
-        self.derivativeText.fontSize = 20
+        self.functionText.fontSize = 17
+        self.derivativeText.fontSize = 17
         self.tangentIndex.fontSize = 20
-        self.pressTIndex.fontSize = 20
-        self.pressDIndex.fontSize = 20
-        self.tangentPointText.fontSize = 20
+        # self.pressTIndex.fontSize = 20
+        # self.pressDIndex.fontSize = 20
+        self.tangentPointText.fontSize = 17
         
     def handle_events(self):
         keys = pygame.key.get_pressed()
@@ -116,16 +117,17 @@ class Render:
         self.functionText.render(self.screen)
         self.derivativeText.render(self.screen)
         
-        tangent_point = ("(%f, %f)" %(self.x_point, self.func.f.subs(self.func.x, self.x_point)))
+        tangent_point = (" (%f, %f)" %(self.x_point, self.func.f.subs(self.func.x, self.x_point)))
         self.tangentPointText.text = tangent_point
         self.tangentPointText.render(self.screen)
         self.pressTIndex.render(self.screen)
         self.pressDIndex.render(self.screen)
+        self.pressPIndex.render(self.screen)
 
         
     def update_parameters(self):
         self.functionText.text = self.input_text
-        run_button = Button(self.panel.position[0]+20, self.panel.position[1]+110, 60, 30, 'RUN').render(self.screen)
+        run_button = Button(self.panel.position[0]+150, self.panel.position[1]+110, 60, 30, 'RUN').render(self.screen)
         if run_button:
             self.func = WindowCoordinante((1920,1080), self.SCALE, str(self.input_text), np.linspace(-50,50,1001))
             self.derivativeText.text = str(self.func.df)
@@ -149,7 +151,7 @@ class Render:
                 self.x_point += 0.01
 
             self.update_parameters()
-            self.panel.get_hover_status()
+            self.functionPanel.get_hover_status()
 
             pygame.display.flip()
         self.running = True
