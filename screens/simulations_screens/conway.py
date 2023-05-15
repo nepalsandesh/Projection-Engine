@@ -1,12 +1,12 @@
 import pygame 
 import numpy as np
-from numba import jit
+from numba import njit
 
 from .parameters import conway_panel, scale_index, scale_panel, total_cells_index, \
     alive_cells_index, dead_cells_index, scale_value, RunButton, fps, grid_shape_index, pause_text_conway
 
 
-@jit()
+@njit(fastmath=True)
 def Get_neighbours(x, y, rows, columns, grid_array):
     total = 0
     for n in range(-1, 2):
