@@ -1,5 +1,5 @@
 import pygame 
-from ui import Button
+from ui import Button, Panel
 from screens.MathEngine.Calculus_Engine.calculus_engine import Render
 
 
@@ -13,6 +13,8 @@ class MathEngine:
         self.clock = clock
         self.FPS = 60
         
+        # panel
+        self.panel = Panel((810,300), 450, 500, (25, 25, 50))
         
         
         # BUTTONS
@@ -38,6 +40,9 @@ class MathEngine:
                     
     def displayMenu(self):
         """Displays each buttons and runs the corresponding function if clicked"""
+        
+        self.panel.render(self.screen)
+        
         if self.CalculusButton.Draw(self.screen):
             self.CalculusEngine.run()
         elif self.TrigonometryButton.Draw(self.screen):

@@ -30,12 +30,12 @@ conway_panel.alpha = 230
 scale_index = TextUI("Scale : ", (conway_panel.position[0]+15, conway_panel.position[1]+35), (255,255,255))
 scale_value = TextUI('', (scale_panel.position[0]+15, scale_panel.position[1]+15), (255,255,255))
 
-grid_shape_index = TextUI("Grid shape : ", (conway_panel.position[0]+15, conway_panel.position[1] + 90),(255,190,255))
-total_cells_index = TextUI("Total Cells : ", (conway_panel.position[0]+15, conway_panel.position[1] + 120),(255,190,255))
-alive_cells_index = TextUI("Total Alive Cells : ", (conway_panel.position[0]+15, conway_panel.position[1] + 150), (255,190,255))
-dead_cells_index = TextUI("Total Dead Cells : ", (conway_panel.position[0]+15, conway_panel.position[1] + 180), (255,190,255))
-fps = TextUI("FPS : ", (conway_panel.position[0]+15, conway_panel.position[1]+210), (255,190,255))
-pause_text_conway = TextUI("Press 'space' to pause", (conway_panel.position[0]+15, conway_panel.position[1]+250), (155,200,255))
+grid_shape_index = TextUI("Grid shape : ", (conway_panel.position[0]+15, conway_panel.position[1] + 90),(155,200,255))
+total_cells_index = TextUI("Total Cells : ", (conway_panel.position[0]+15, conway_panel.position[1] + 120),(155,200,255))
+alive_cells_index = TextUI("Total Alive Cells : ", (conway_panel.position[0]+15, conway_panel.position[1] + 150), (155,200,255))
+dead_cells_index = TextUI("Total Dead Cells : ", (conway_panel.position[0]+15, conway_panel.position[1] + 180), (155,200,255))
+fps = TextUI("FPS : ", (conway_panel.position[0]+15, conway_panel.position[1]+210), (155,200,255))
+pause_text_conway = TextUI("Press 'space' to pause", (conway_panel.position[0]+15, conway_panel.position[1]+250), (255,190,255))
 
 grid_shape_index.fontSize = 18
 total_cells_index.fontSize = 18

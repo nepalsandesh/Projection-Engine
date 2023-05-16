@@ -1,5 +1,5 @@
 import pygame 
-from ui import Button
+from ui import Button, Panel
 from screens.simulations_screens import doublePendulum, conway, gravity
 
 class Simulation:
@@ -12,6 +12,9 @@ class Simulation:
         self.clock = clock
         self.FPS = 60
         
+        # panel
+        self.panel = Panel((810,300), 400, 500, (25, 25, 50))
+        self.panel_doublePendulum = Panel((1125,300), 400, 300, (25, 25, 50))
         
         
         #SIMULATION BUTTONS
@@ -45,6 +48,8 @@ class Simulation:
             self.clear_screen()
             self.check_events()
             
+            self.panel.render(self.screen)
+            
             if self.GravityButton.Draw(self.screen):
                 Gravity = gravity.Gravity(self.screen, self.resolution, self.clock, self.FPS)
                 while Gravity.running:
@@ -55,6 +60,7 @@ class Simulation:
                     self.clock.tick(self.FPS)
                     self.clear_screen()
                     self.check_events()
+                    self.panel_doublePendulum.render(self.screen)
                     if self.DoublePendulumButton.Draw(self.screen):
                         double_pendulum = doublePendulum.DoublePendulum(self.screen, self.resolution, self.clock, self.FPS)
                         double_pendulum.render()

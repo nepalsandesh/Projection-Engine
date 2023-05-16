@@ -1,6 +1,6 @@
 import pygame 
 from constants import *
-from ui import Button
+from ui import Button, Panel
 from screens.simulations import Simulation
 from screens.math_engine import MathEngine
 from screens.obj_renderer.render import SoftwareRender
@@ -20,6 +20,9 @@ class Render:
         self.clock = pygame.time.Clock()
         self.FPS = 60
         self.running = True
+        
+        # panel 
+        self.panel = Panel((325,100), 400, 500, (25, 25, 50))
         
         # BUTTONS
         self.ChaosEquationButton = Button(WIDTH//4 - 100, self.HEIGHT//10, 300, 60, "Chaos Equation")
@@ -44,6 +47,8 @@ class Render:
     def displayMenu(self):
         """Displays each buttons and runs the corresponding function if clicked"""
 
+        self.panel.render(self.screen)
+        
         if self.MathEngineButton.Draw(self.screen):
             self.MathEngine.run_menu()
         elif self.SimulationButton.Draw(self.screen):
