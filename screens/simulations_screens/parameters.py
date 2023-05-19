@@ -25,7 +25,7 @@ fps_Index.fontSize = 18
 # UI instances of Conway
 conway_panel = Panel(color=(30,30,55), w=275, h=300, position=(1920-285,10))
 scale_panel = Panel((conway_panel.position[0] + 90, conway_panel.position[1]+20), 80, 50, (55,155,155))
-conway_panel.alpha = 230
+conway_panel.alpha = 170
 
 scale_index = TextUI("Scale : ", (conway_panel.position[0]+15, conway_panel.position[1]+35), (255,255,255))
 scale_value = TextUI('', (scale_panel.position[0]+15, scale_panel.position[1]+15), (255,255,255))
