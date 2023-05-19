@@ -32,3 +32,15 @@ Clone this repo to your local machine.
 
 ### Run Application
 > python3 main.py
+
+
+## Demos
+
+![](images/Screenshot%20from%202023-05-19%2008-22-06.png)
+![](images/Screenshot%20from%202023-05-19%2008-22-52.png)
+![](images/Screenshot%20from%202023-05-19%2008-23-03.png)
+![](images/Screenshot%20from%202023-05-19%2008-23-15.png)
+![](images/Screenshot%20from%202023-05-19%2008-23-38.png)
+![](images/Screenshot%20from%202023-05-19%2008-24-17.png)
+![](images/Screenshot%20from%202023-05-19%2008-27-07.png)
+![](images/Screenshot%20from%202023-05-19%2008-27-42.png)
