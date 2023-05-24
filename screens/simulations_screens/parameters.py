@@ -23,7 +23,7 @@ fps_Index.fontSize = 18
 
 
 # UI instances of Conway
-conway_panel = Panel(color=(30,30,55), w=275, h=300, position=(1920-285,10))
+conway_panel = Panel(color=(30,30,55), w=275, h=350, position=(1920-285,10))
 scale_panel = Panel((conway_panel.position[0] + 90, conway_panel.position[1]+20), 80, 50, (55,155,155))
 conway_panel.alpha = 170
 
@@ -48,3 +48,7 @@ fps.fontSize = 18
 RunButton = Button(conway_panel.position[0] + 180, conway_panel.position[1]+20, 80, 50, "RUN")
 RunButton.initial_color = (100,100,140)
 RunButton.text_color = (255,255, 255)
+
+DrawModeButton = Button(conway_panel.position[0] + 55 , conway_panel.position[1] + 350 - 65, 160, 50, "Draw Mode")
+DrawModeButton.initial_color = (100,100,140)
+DrawModeButton.text_color = (255,255, 255)

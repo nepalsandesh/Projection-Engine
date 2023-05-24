@@ -3,7 +3,8 @@ import numpy as np
 from numba import njit
 
 from .parameters import conway_panel, scale_index, scale_panel, total_cells_index, \
-    alive_cells_index, dead_cells_index, scale_value, RunButton, fps, grid_shape_index, pause_text_conway
+    alive_cells_index, dead_cells_index, scale_value, RunButton, fps, grid_shape_index, \
+    pause_text_conway, DrawModeButton
 
 
 @njit(fastmath=True)
@@ -96,6 +97,7 @@ class ConwaysGameOfLife:
         fps.render(self.screen, str(np.round(self.clock.get_fps(),2)))
         grid_shape_index.render(self.screen, str(self.grid_array.shape))
         pause_text_conway.render(self.screen)
+        DrawModeButton.render(self.screen)
         
     
     def run(self):
@@ -133,7 +135,14 @@ class ConwaysGameOfLife:
                 self.size = (self.rows, self.columns)
                 self.grid_array = np.random.randint(2, size=self.size)
                         
-            
+            if DrawModeButton.render(self.screen):
+                self.scale = int(self.scaleTemp)
+                self.columns = int(self.height/self.scale)
+                self.rows = int(self.width/self.scale)
+                self.size = (self.rows, self.columns)
+                self.grid_array = np.zeros(self.size)
+                self.pause = not self.pause
+                
                 
             # frame_count += 1
             # filename = "captures/%04d.png" % ( frame_count ) # name with four decimals
