@@ -1,6 +1,7 @@
 import pygame 
 from ui import Button, Panel
 from screens.simulations_screens import doublePendulum, conway, gravity, chaosTheory
+from .simulations_screens.heavenly_body_simulation import all_in_one
 
 class Simulation:
     def __init__(self, screen, resolution, clock, FPS=60):
@@ -20,6 +21,7 @@ class Simulation:
         #SIMULATION BUTTONS
         self.SHMbutton = Button(self.WIDTH//2 - 100, self.HEIGHT//3, 300, 60, "Simple Harmonic Motion")
         self.GravityButton = Button(self.WIDTH//2 - 100, self.HEIGHT//3+100, 300, 60, "Gravity")
+        self.HeavenlySimButton = Button(self.WIDTH//2 - 100, self.HEIGHT//3+300, 300, 60, "Heavenly Body Simulation")
         self.ChaosAttractorButton = Button(self.WIDTH//2 - 100, self.HEIGHT//3+300, 300, 60, "Chaos and Attractor")
         self.GameofLifeButton = Button(self.WIDTH//2 - 100, self.HEIGHT//3+200, 300, 60, "Conways Game of Life")
         
@@ -69,7 +71,10 @@ class Simulation:
                         chaosTheory.render(self.screen, self.clock, self.FPS)
                     
                     pygame.display.flip()
-                self.running = True                   
+                self.running = True 
+                
+            elif self.HeavenlySimButton.Draw(self.screen):
+                all_in_one.render(self.screen, self.clock, self.FPS)         
                     
             # elif self.ChaosAttractorButton.Draw(self.screen):
             #     while self.running:
