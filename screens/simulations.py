@@ -1,6 +1,6 @@
 import pygame 
 from ui import Button, Panel
-from screens.simulations_screens import doublePendulum, conway, gravity
+from screens.simulations_screens import doublePendulum, conway, gravity, chaosTheory
 
 class Simulation:
     def __init__(self, screen, resolution, clock, FPS=60):
@@ -25,6 +25,7 @@ class Simulation:
         
         #SUB Buttons 
         self.DoublePendulumButton = Button(self.WIDTH//1.5 - 100, self.HEIGHT//3, 300, 60, "Double Pendulum")
+        self.ChaosTheoryButton = Button(self.WIDTH//1.5 - 100, self.HEIGHT//3 + 100, 300, 60, "Chaos Theory")
         
         
         
@@ -64,6 +65,9 @@ class Simulation:
                     if self.DoublePendulumButton.Draw(self.screen):
                         double_pendulum = doublePendulum.DoublePendulum(self.screen, self.resolution, self.clock, self.FPS)
                         double_pendulum.render()
+                    elif self.ChaosTheoryButton.Draw(self.screen):
+                        chaosTheory.render(self.screen, self.clock, self.FPS)
+                    
                     pygame.display.flip()
                 self.running = True                   
                     

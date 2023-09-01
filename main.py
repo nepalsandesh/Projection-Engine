@@ -81,11 +81,7 @@ class Render:
             
             pygame.display.update()
             
-
-
-            
-            
-            
+   
         
 if __name__ == "__main__":
     app = Render()
