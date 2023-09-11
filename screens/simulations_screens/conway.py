@@ -38,7 +38,7 @@ class ConwaysGameOfLife:
         
         self.black = (55,0,55)
         self.white = (0, 0, 0) # felt lazy so I converted here :)
-        self.dark_blue = (75, 220, 75)
+        self.dark_blue = (49, 172, 224)
         self.on_color = (155,155,155)
         self.off_color = (0,0,0)
         
