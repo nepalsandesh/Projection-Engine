@@ -85,11 +85,13 @@ class RenderEngine:
         # self.logo = pygame.transform.rotozoom(self.logo, 0, 0.35)
         
         self.rotation_speed = 0.004
-        self.bodies = [Body(
-            position=np.random.randint(-500, 500, 3),
-            mass=np.random.randint(5, 20) * 6e15,
-            color=np.random.randint(0, 256, 3)
-                ) for i in range(1)]
+        # self.bodies = [Body(
+        #     position=np.random.randint(-500, 500, 3),
+        #     mass=np.random.randint(5, 20) * 6e15,
+        #     color=np.random.randint(0, 256, 3)
+        #         ) for i in range(1)]
+        
+        self.bodies = []
         
         self.bodies.append(Body(
             position=np.zeros(3),
@@ -97,6 +99,12 @@ class RenderEngine:
             radius=40,
             color=np.array([255, 255, 255])
             ))
+        
+        self.bodies.append(Body(
+            position=np.random.randint(-500, 500, 3),
+            mass=np.random.randint(5, 20) * 6e15,
+            color=np.random.randint(0, 256, 3)
+                ))
 
         for body in self.bodies:
             body.add_velocity(np.random.randint(-500, 500, 3))
@@ -222,7 +230,7 @@ class RenderEngine:
                       ))
             idx = self.bodies.size - 1
             self.bodies[idx].add_velocity(np.random.randint(-500, 500, 3))
-            self.bodies = self.bodies[::-1]
+            # self.bodies = self.bodies[::-1]
 
         if distance_plus_button.is_double_clicked(self.screen):
             self.distance += 22
@@ -255,7 +263,7 @@ class RenderEngine:
             self.update()
             self.draw()
             self.render_ui()
-            self.bodies[-1].position = np.zeros(3)
+            self.bodies[0].position = np.zeros(3)
             
             # if self.display_logo:
             #     self.screen.blit(self.logo, (1740, 1000))
