@@ -5,8 +5,58 @@ from screens.simulations import Simulation
 from screens.math_engine import MathEngine
 from screens.obj_renderer.render import SoftwareRender
 from screens.obj_renderer.object_loader import run as load
+import numpy as np
 
 
+class Addon:
+    def __init__(self):
+        self.star_list = [
+            [-1, 0, 0],           # Left point
+            [-0.5, -0.866, 0],     # Upper-left point (bottom triangle)
+            [0.5, -0.866, 0],      # Upper-right point (top triangle)
+            [1, 0, 0],            # Right point
+            [0.5, 0.866, 0],       # Lower-right point (top triangle)
+            [-0.5, 0.866,0]       # Lower-left point (bottom triangle)
+        ]
+
+        self.star_list = np.array(self.star_list)
+        self.star_list = np.array([self.star_list[:, 0], self.star_list[:, 1], self.star_list[:, 2]]).T
+
+        self.scale = 400
+
+        self.theta = np.pi/2
+        self.light_blue = (125, 125, 255)
+
+    def rot_z(self):
+        return np.array([
+            [-np.cos(self.theta), -np.sin(self.theta), 0],
+            [np.sin(self.theta), -np.cos(self.theta),  0],
+            [0, 0, 1]
+        ])
+    
+
+    def draw(self, screen):
+        # draw lines 
+        seq1 = np.dot(self.star_list[0::2, :], self.rot_z())
+        seq1 = np.array([seq1[:, 0]*self.scale+1920//2, seq1[:, 1]*self.scale+1080//2]).T
+        # print("seq1 = ", seq1)
+        pygame.draw.lines(screen, self.light_blue, True, seq1, 10)
+
+        seq2 = np.dot(self.star_list[1::2, :], self.rot_z())
+        seq2 = np.array([seq2[:, 0] * self.scale + 1920//2, seq2[:, 1]*self.scale+1080//2]).T
+        # print("seq1 = ", seq2)
+        pygame.draw.lines(screen, self.light_blue, True, seq2, 10)
+
+        # draw points
+        for point in self.star_list:
+            point = np.dot(point, self.rot_z())
+            print(point)
+            pygame.draw.circle(screen, self.light_blue, (point[0]*self.scale+1920//2, point[1]*self.scale+1080//2), 10)
+        
+        self.theta += 0.001
+
+    
+    
 
 
 class Render:
@@ -37,6 +87,8 @@ class Render:
         self.Simulation = Simulation(self.screen, self.RESOLUTION, self.clock, self.FPS)
         self.MathEngine = MathEngine(self.screen, self.RESOLUTION, self.clock, self.FPS)
         # self.ObjEngine = SoftwareRender(self.screen, self.RESOLUTION, self.clock, self.FPS)
+
+        self.AddOn = Addon()
         
         
         
@@ -60,6 +112,9 @@ class Render:
         #     self.AlgViz.Run()
         # elif self.GamesButton.Draw(self.screen):
         #     self.Games.Run()
+
+    def displayAddOn(self):
+        self.AddOn.draw(self.screen)
     
     def check_events(self):
         for event in pygame.event.get():
@@ -76,9 +131,9 @@ class Render:
             self.clock.tick(self.FPS)
             self.clear_screen()
             self.check_events()
-            
+            self.displayAddOn()
             self.displayMenu()
-            
+            print(self.clock.get_fps())
             pygame.display.update()
             
    
