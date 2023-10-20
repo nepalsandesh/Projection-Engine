@@ -50,10 +50,18 @@ class Addon:
         # draw points
         for point in self.star_list:
             point = np.dot(point, self.rot_z())
-            print(point)
+            # print(point)  
             pygame.draw.circle(screen, self.light_blue, (point[0]*self.scale+1920//1.5, point[1]*self.scale+1080//2), 10)
         
         self.theta += 0.004
+        if self.scale <= 1300:
+            self.scale += 0.4
+        else:
+            self.scale = 170
+        print(self.scale)
+
+
+        
 
     
     
