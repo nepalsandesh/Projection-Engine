@@ -22,7 +22,7 @@ class Addon:
         self.star_list = np.array(self.star_list)
         self.star_list = np.array([self.star_list[:, 0], self.star_list[:, 1], self.star_list[:, 2]]).T
 
-        self.scale = 400
+        self.scale = 170
 
         self.theta = np.pi/2
         self.light_blue = (125, 125, 255)
@@ -38,12 +38,12 @@ class Addon:
     def draw(self, screen):
         # draw lines 
         seq1 = np.dot(self.star_list[0::2, :], self.rot_z())
-        seq1 = np.array([seq1[:, 0]*self.scale+1920//2, seq1[:, 1]*self.scale+1080//2]).T
+        seq1 = np.array([seq1[:, 0]*self.scale+1920//1.5, seq1[:, 1]*self.scale+1080//2]).T
         # print("seq1 = ", seq1)
         pygame.draw.lines(screen, self.light_blue, True, seq1, 10)
 
         seq2 = np.dot(self.star_list[1::2, :], self.rot_z())
-        seq2 = np.array([seq2[:, 0] * self.scale + 1920//2, seq2[:, 1]*self.scale+1080//2]).T
+        seq2 = np.array([seq2[:, 0] * self.scale + 1920//1.5, seq2[:, 1]*self.scale+1080//2]).T
         # print("seq1 = ", seq2)
         pygame.draw.lines(screen, self.light_blue, True, seq2, 10)
 
@@ -51,9 +51,9 @@ class Addon:
         for point in self.star_list:
             point = np.dot(point, self.rot_z())
             print(point)
-            pygame.draw.circle(screen, self.light_blue, (point[0]*self.scale+1920//2, point[1]*self.scale+1080//2), 10)
+            pygame.draw.circle(screen, self.light_blue, (point[0]*self.scale+1920//1.5, point[1]*self.scale+1080//2), 10)
         
-        self.theta += 0.001
+        self.theta += 0.004
 
     
     
