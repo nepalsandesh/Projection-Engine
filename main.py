@@ -8,7 +8,7 @@ from screens.obj_renderer.object_loader import run as load
 import numpy as np
 
 
-class Addon:
+class StarAddon:
     def __init__(self):
         self.star_list = [
             [-1, 0, 0],           # Left point
@@ -21,10 +21,12 @@ class Addon:
 
         self.star_list = np.array(self.star_list)
         self.star_list = np.array([self.star_list[:, 0], self.star_list[:, 1], self.star_list[:, 2]]).T
+        self.tail_matrix = []
 
-        self.scale = 170
+        self.scale = 0
 
         self.theta = np.pi/2
+        self.speed = 0.004
         self.light_blue = (125, 125, 255)
 
     def rot_z(self):
@@ -33,6 +35,19 @@ class Addon:
             [np.sin(self.theta), -np.cos(self.theta),  0],
             [0, 0, 1]
         ])
+    
+    def append(self, coordinates, screen):
+        # print(self.star_list)
+        self.tail_matrix.append(coordinates)
+        # print(self.tail_matrix)
+        if len(self.tail_matrix) > 50:
+            for i in range(6):
+                # print("tail array: ", self.tail_matrix[i::6])
+                pygame.draw.lines(screen, (155,155,155), False, self.tail_matrix[i::6])
+
+        # if len(self.tail_matrix) > 12:
+        #     exit()
+
     
 
     def draw(self, screen):
@@ -51,15 +66,19 @@ class Addon:
         for point in self.star_list:
             point = np.dot(point, self.rot_z())
             # print(point)  
-            pygame.draw.circle(screen, self.light_blue, (point[0]*self.scale+1920//1.5, point[1]*self.scale+1080//2), 10)
-        
-        self.theta += 0.004
-        if self.scale <= 1300:
-            self.scale += 0.4
-        else:
-            self.scale = 170
-        print(self.scale)
+            coordinate = (point[0]*self.scale+1920//1.5, point[1]*self.scale+1080//2)
+            print("coordinate: ", coordinate)
+            pygame.draw.circle(screen, self.light_blue, coordinate, 10)
+            self.append(coordinate,screen)
 
+        
+        self.theta += self.speed
+        if self.scale <= 1300:
+            self.scale += 0.8
+        else:
+            self.tail_matrix = []
+            self.scale = 170
+        # print(self.scale)
 
         
 
@@ -80,7 +99,7 @@ class Render:
         self.running = True
         
         # panel 
-        self.panel = Panel((325,100), 400, 500, (25, 25, 50))
+        self.panel = Panel((325,100), 400, 500, (25, 25, 50), alpha=150)
         
         # BUTTONS
         self.ChaosEquationButton = Button(WIDTH//4 - 100, self.HEIGHT//10, 300, 60, "Chaos Equation")
@@ -96,7 +115,7 @@ class Render:
         self.MathEngine = MathEngine(self.screen, self.RESOLUTION, self.clock, self.FPS)
         # self.ObjEngine = SoftwareRender(self.screen, self.RESOLUTION, self.clock, self.FPS)
 
-        self.AddOn = Addon()
+        self.AddOn = StarAddon()
         
         
         
@@ -143,6 +162,7 @@ class Render:
             self.displayMenu()
             print(self.clock.get_fps())
             pygame.display.update()
+            # exit()
             
    
         
