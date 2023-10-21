@@ -99,7 +99,7 @@ class Render:
         self.running = True
         
         # panel 
-        self.panel = Panel((325,100), 400, 500, (25, 25, 50), alpha=150)
+        self.panel = Panel((325,100), 400, 500, (25, 25, 50), alpha=200)
         
         # BUTTONS
         self.ChaosEquationButton = Button(WIDTH//4 - 100, self.HEIGHT//10, 300, 60, "Chaos Equation")
