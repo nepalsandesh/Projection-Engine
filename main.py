@@ -48,6 +48,14 @@ class StarAddon:
         # if len(self.tail_matrix) > 12:
         #     exit()
 
+    def update(self):
+        self.theta += self.speed
+        if self.scale <= 1300:
+            self.scale += 0.8
+        else:   
+            self.tail_matrix = []
+            self.scale *= -1
+
     
 
     def draw(self, screen):
@@ -70,17 +78,7 @@ class StarAddon:
             print("coordinate: ", coordinate)
             pygame.draw.circle(screen, self.light_blue, coordinate, 10)
             self.append(coordinate,screen)
-
-        
-        self.theta += self.speed
-        if self.scale <= 1300:
-            self.scale += 0.8
-        else:
-            self.tail_matrix = []
-            self.scale = 170
-        # print(self.scale)
-
-        
+       
 
     
     
@@ -142,6 +140,7 @@ class Render:
 
     def displayAddOn(self):
         self.AddOn.draw(self.screen)
+        self.AddOn.update()
     
     def check_events(self):
         for event in pygame.event.get():
