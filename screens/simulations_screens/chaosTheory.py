@@ -3,6 +3,28 @@ import pygame
 import math
 import colorsys
 from numba import jit
+from .ui import Panel, TextUI, Button
+
+class ControllerUI:
+    def __init__(self, screen):
+        self.screen = screen
+        self.ui_panel = Panel(position=(1920-365+50, 20), w=300, h=300, color=(25, 25, 50), alpha=200)
+        self.mass1Panel = Panel((self.ui_panel.position[0] + 175, self.ui_panel.position[1] + 40), 90, 30, (255,255,255), 150)
+        self.mass2Panel = Panel((self.ui_panel.position[0] + 175, self.ui_panel.position[1] + 80), 90, 30, (255,255,255), 150)
+        self.length1Panel = Panel((self.ui_panel.position[0] + 175, self.ui_panel.position[1] + 120), 90, 30, (255,255,255), 150)
+        self.length2Panel = Panel((self.ui_panel.position[0] + 175, self.ui_panel.position[1] + 160), 90, 30, (255,255,255), 150)
+        self.GravityPanel = Panel((self.ui_panel.position[0] + 175, self.ui_panel.position[1] + 200), 90, 30, (255,255,255), 150)
+        self.RunButton = Button(self.ui_panel.position[0] + 120, self.ui_panel.position[1] + 240, 80, 50, "RUN")
+        # self.mass1UI = TextUI(self.mass1Temp, (self.mass1Panel.position[0]+10, self.mass1Panel.position[1]+5), (255,255,255))
+
+
+    def render(self):
+        self.ui_panel.render(self.screen)
+        self.mass1Panel.render(self.screen)
+        self.length1Panel.render(self.screen)
+        self.GravityPanel.render(self.screen)
+        self.RunButton.render(self.screen)
+
 
 
 @jit(nopython=True)
@@ -134,6 +156,7 @@ for body in bodies:
 
 def render(screen,clock, FPS):
     run=True
+    controllerUI = ControllerUI(screen)
     while run:
         
         clock.tick(FPS) 
@@ -153,7 +176,8 @@ def render(screen,clock, FPS):
                     
         # drawing and updating stuffs
         for body in bodies:
-            body.draw_and_update(screen=screen)                
+            body.draw_and_update(screen=screen)    
+        controllerUI.render()            
         pygame.display.flip()
 
         
