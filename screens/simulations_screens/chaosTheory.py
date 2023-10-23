@@ -5,27 +5,6 @@ import colorsys
 from numba import jit
 from .ui import Panel, TextUI, Button
 
-class ControllerUI:
-    def __init__(self, screen):
-        self.screen = screen
-        self.ui_panel = Panel(position=(1920-365+50, 20), w=300, h=300, color=(25, 25, 50), alpha=200)
-        self.mass1Panel = Panel((self.ui_panel.position[0] + 175, self.ui_panel.position[1] + 40), 90, 30, (255,255,255), 150)
-        self.mass2Panel = Panel((self.ui_panel.position[0] + 175, self.ui_panel.position[1] + 80), 90, 30, (255,255,255), 150)
-        self.length1Panel = Panel((self.ui_panel.position[0] + 175, self.ui_panel.position[1] + 120), 90, 30, (255,255,255), 150)
-        self.length2Panel = Panel((self.ui_panel.position[0] + 175, self.ui_panel.position[1] + 160), 90, 30, (255,255,255), 150)
-        self.GravityPanel = Panel((self.ui_panel.position[0] + 175, self.ui_panel.position[1] + 200), 90, 30, (255,255,255), 150)
-        self.RunButton = Button(self.ui_panel.position[0] + 120, self.ui_panel.position[1] + 240, 80, 50, "RUN")
-        # self.mass1UI = TextUI(self.mass1Temp, (self.mass1Panel.position[0]+10, self.mass1Panel.position[1]+5), (255,255,255))
-
-
-    def render(self):
-        self.ui_panel.render(self.screen)
-        self.mass1Panel.render(self.screen)
-        self.length1Panel.render(self.screen)
-        self.GravityPanel.render(self.screen)
-        self.RunButton.render(self.screen)
-
-
 
 @jit(nopython=True)
 def FirstAcceleration(t1, t2, m1, m2, L1, L2, G, v1, v2):
@@ -111,27 +90,98 @@ class Body:
         
 # ------------------------------------------------------
 
+class Bodies:
+    def __init__(self):
+        self.dm1 = 0.01
+        self.dm2 = 0.001
+        self.dl1 = 0
+        self.dl2 = 0
+        self.dTheta1 = 0
+        self.dTheta2 = 0
+        self.gravity = 0.5
+        self.dGravity = 0
+
+        self.bodies = [Body(
+            mass1=40 + (i * self.dm1),
+            mass2=40 + (i * self.dm2),
+            length1=250 + (i * self.dl1),
+            length2=250 + (i * self.dl2),
+            angle1=math.pi/1.9 + (i * self.dTheta1),
+            angle2= math.pi/1.9 + (i * self.dTheta2),
+            angle_velocity1=0,
+            angle_velocity2=0,
+            angle_acceleration2=0,
+            angle_acceleration1=0,
+            color=None,
+            Gravity= self.gravity + (i * self.dGravity),
+        ) for i in range(1000)]
+    
+    def update(self):
+        self.bodies = [Body(
+            mass1=40 + (i * self.dm1),
+            mass2=40 + (i * self.dm2),
+            length1=250 + (i * self.dl1),
+            length2=250 + (i * self.dl2),
+            angle1=math.pi/1.9 + (i * self.dTheta1),
+            angle2= math.pi/1.9 + (i * self.dTheta2),
+            angle_velocity1=0,
+            angle_velocity2=0,
+            angle_acceleration2=0,
+            angle_acceleration1=0,
+            color=None,
+            Gravity= self.gravity + (i * self.dGravity),
+        ) for i in range(1000)]
 
 
 
-bodies = [Body(
-    mass1=40,
-    mass2=40+i/1000,
-    length1=250,
-    length2=250,
-    angle1=math.pi/1.9,
-    angle2= math.pi/1.9,
-    angle_velocity1=0,
-    angle_velocity2=0,
-    angle_acceleration2=0,
-    angle_acceleration1=0,
-    color=None,
-    Gravity=0.5,
-) for i in range(1000)]
+bodies = Bodies()
+
+max_mass = max(body.mass2 for body in bodies.bodies)
+min_mass = min(body.mass2 for body in bodies.bodies)
 
 
-max_mass = max(body.mass2 for body in bodies)
-min_mass = min(body.mass2 for body in bodies)
+class ControllerUI:
+    def __init__(self, screen):
+        self.screen = screen
+        self.ui_panel = Panel(position=(1920-365+50, 20), w=300, h=300, color=(25, 25, 50), alpha=200)
+        self.dm1Panel = Panel((self.ui_panel.position[0] + 175, self.ui_panel.position[1] + 40), 90, 30, (255,255,255), 150)
+        self.dm2Panel = Panel((self.ui_panel.position[0] + 175, self.ui_panel.position[1] + 80), 90, 30, (255,255,255), 150)
+        self.dl1Panel = Panel((self.ui_panel.position[0] + 175, self.ui_panel.position[1] + 120), 90, 30, (255,255,255), 150)
+        self.dl2Panel = Panel((self.ui_panel.position[0] + 175, self.ui_panel.position[1] + 160), 90, 30, (255,255,255), 150)
+        self.GravityPanel = Panel((self.ui_panel.position[0] + 175, self.ui_panel.position[1] + 200), 90, 30, (255,255,255), 150)
+        self.RunButton = Button(self.ui_panel.position[0] + 120, self.ui_panel.position[1] + 240, 80, 50, "RUN")
+        self.dm1UI = TextUI(str(bodies.dm1), (self.dm1Panel.position[0]+10, self.dm1Panel.position[1]+5), (255,255,255))
+        self.mass1Index = TextUI("Mass-1 : ", (1605+20,65), (255,255,255,15))
+        self.mass2Index = TextUI("Mass-2 : ", (1605+20,105), (255,255,255,15))
+        self.length1Index = TextUI("Length-1 : ", (1605+20,145), (255,255,255,15))
+        self.length2Index = TextUI("Length-2 : ", (1605+20,185), (255,255,255,15))
+        self.gravityIndex = TextUI("Gravity : ", (1605+20,225), (255,255,255,15))
+
+        self.pause_text = TextUI("Press 'space' to Pause",(30,55), (50,165,165))
+        self.curve_text = TextUI("Press 'C' to display Position Curve", (self.pause_text.position[0], self.pause_text.position[1]+ 25), (50,165,165))
+        self.theta1_index = TextUI("Theta-1 : ", (self.pause_text.position[0], self.pause_text.position[1]+ 55), (165,165,165))
+        self.theta2_index = TextUI("Theta-2 : ", (self.pause_text.position[0], self.pause_text.position[1]+ 80), (165,165,165))
+        self.fps_Index = TextUI("FPS : ", (self.pause_text.position[0], self.pause_text.position[1]+ 105), (165,165,165))
+
+        self.pause_text.fontSize = 18
+        self.curve_text.fontSize = 18
+        self.theta1_index.fontSize = 18
+        self.theta2_index.fontSize = 18
+        self.fps_Index.fontSize = 18
+
+
+    def render(self):
+        self.ui_panel.render(self.screen)
+        self.dm1Panel.render(self.screen)
+        self.dl1Panel.render(self.screen)
+        self.GravityPanel.render(self.screen)
+        self.RunButton.render(self.screen)
+        self.dm1UI.render(self.screen)
+
+        self.mass1Index.render(self.screen)
+        self.length1Index.render(self.screen)
+        self.pause_text.render(self.screen)
+        self.fps_Index.render(self.screen)
 
 
 # Define a function to map a value to a color
@@ -149,7 +199,7 @@ def map_value_to_rainbow_color(value, min_value, max_value):
     return red, green, blue
 
 # Assign colors to bodies based on their properties
-for body in bodies:
+for body in bodies.bodies:
     red, green, blue = map_value_to_rainbow_color(body.mass2, min_mass, max_mass)
     body.color = (red, green, blue)
 
@@ -175,7 +225,7 @@ def render(screen,clock, FPS):
                     restart = True
                     
         # drawing and updating stuffs
-        for body in bodies:
+        for body in bodies.bodies:
             body.draw_and_update(screen=screen)    
         controllerUI.render()            
         pygame.display.flip()
