@@ -26,7 +26,7 @@ class StarAddon:
         self.scale = 0
 
         self.theta = np.pi/2
-        self.speed = 0.004
+        self.speed = 0.04
         self.light_blue = (125, 125, 255)
 
     def rot_z(self):
@@ -75,7 +75,7 @@ class StarAddon:
             point = np.dot(point, self.rot_z())
             # print(point)  
             coordinate = (point[0]*self.scale+1920//1.5, point[1]*self.scale+1080//2)
-            print("coordinate: ", coordinate)
+            # print("coordinate: ", coordinate)
             pygame.draw.circle(screen, self.light_blue, coordinate, 10)
             self.append(coordinate,screen)
        
@@ -159,7 +159,7 @@ class Render:
             self.check_events()
             self.displayAddOn()
             self.displayMenu()
-            print(self.clock.get_fps())
+            # print(self.clock.get_fps())
             pygame.display.update()
             # exit()
             
