@@ -36,7 +36,7 @@ class ConwaysGameOfLife:
         self.size = (self.rows, self.columns)
         self.grid_array = np.random.randint(2, size=self.size)
         
-        self.black = (55,0,55)
+        self.black = (0,0,0)
         self.white = (0, 0, 0) # felt lazy so I converted here :)
         self.dark_blue = (49, 172, 224)
         self.on_color = (155,155,155)
@@ -54,9 +54,10 @@ class ConwaysGameOfLife:
                 if self.grid_array[x][y] == 1:
                     rect = pygame.Rect(x_pos, y_pos, self.scale-self.offset, self.scale-self.offset)
                     pygame.draw.rect(self.screen, self.dark_blue, rect)
-                else:
-                    rect = pygame.Rect(x_pos, y_pos, self.scale-self.offset, self.scale-self.offset)
-                    pygame.draw.rect(self.screen, self.white, rect)
+                # else:
+                    # rect = pygame.Rect(x_pos, y_pos, self.scale-self.offset, self.scale-self.offset)
+                    # pygame.draw.rect(self.screen, self.white, rect)
+                    # pass
         
         next = np.ndarray(shape=(self.rows, self.columns))
         if self.pause == False:
