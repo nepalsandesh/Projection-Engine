@@ -29,7 +29,7 @@ class ConwaysGameOfLife:
         self.clock = clock
         self.FPS = FPS
         
-        self.scale = 20
+        self.scale = 10
         self.offset = 1
         self.columns = int(self.height//self.scale)
         self.rows = int(self.width//self.scale)
@@ -52,8 +52,9 @@ class ConwaysGameOfLife:
                 x_pos = x * self.scale
                 y_pos = y * self.scale
                 if self.grid_array[x][y] == 1:
-                    rect = pygame.Rect(x_pos, y_pos, self.scale-self.offset, self.scale-self.offset)
-                    pygame.draw.rect(self.screen, self.dark_blue, rect)
+                    # rect = pygame.Rect(x_pos, y_pos, self.scale-self.offset, self.scale-self.offset)
+                    # pygame.draw.rect(self.screen, self.dark_blue, rect)
+                    pygame.draw.circle(self.screen, self.dark_blue, (x_pos, y_pos), (self.scale-self.offset)//1.5)
                 # else:
                     # rect = pygame.Rect(x_pos, y_pos, self.scale-self.offset, self.scale-self.offset)
                     # pygame.draw.rect(self.screen, self.white, rect)
@@ -142,7 +143,7 @@ class ConwaysGameOfLife:
                 self.rows = int(self.width/self.scale)
                 self.size = (self.rows, self.columns)
                 self.grid_array = np.zeros(self.size)
-                self.pause = not self.pause
+                self.pause = True
                 
                 
             # frame_count += 1
