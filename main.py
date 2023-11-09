@@ -26,8 +26,8 @@ class StarAddon:
         self.scale = 0
 
         self.theta = np.pi/2
-        self.speed = 0.04
-        self.light_blue = (125, 125, 255)
+        self.speed = 0.004  
+        self.light_blue = (72, 165, 219)
 
     def rot_z(self):
         return np.array([
