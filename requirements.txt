@@ -6,3 +6,5 @@ pygame==2.4.0
 sympy==1.12
 zipp==3.15.0
 llvmlite==0.40.0
+scipy
+opencv-python
