@@ -30,7 +30,7 @@ class ConwaysGameOfLife:
         self.clock = clock
         self.FPS = FPS
         
-        self.scale = 30
+        self.scale = 10
         self.offset = 1
         self.columns = int(self.height//self.scale)
         self.rows = int(self.width//self.scale)
@@ -61,8 +61,12 @@ class ConwaysGameOfLife:
                     # pygame.draw.rect(self.screen, self.white, rect)
                     # pass
                 image = self.grid_array * 255
-                blurred_image = ndimage.gaussian_filter(image, sigma=1)
-                cell_color = (blurred_image[x][y], blurred_image[x][y], blurred_image[x][y])
+
+                blurred_image = ndimage.gaussian_filter(image, sigma=2)
+                # cell_color = (blurred_image[x][y], blurred_image[x][y], blurred_image[x][y])  # gray map
+                cell_color = (blurred_image[x][y]//2.1, blurred_image[x][y]//2.1, blurred_image[x][y])  # gray map
+                # print(cell_color)
+                # cell_color = (100, 155, 255)  # blue tone
                 # rect = pygame.Rect(x_pos, y_pos, self.scale-self.offset, self.scale,self.offset)
                 pygame.draw.rect(self.screen, cell_color, rect)
         
@@ -80,18 +84,6 @@ class ConwaysGameOfLife:
                         next[x][y] = state
             self.grid_array = next
 
-    def gaussian_conway(self):
-        for x in range(self.rows):
-            for y in range(self.columns):
-                x_pos = x * self.scale
-                y_pos = y * self.scale
-                image = self.grid_array * 255
-                blurred_image = ndimage.gaussian_filter(image, sigma=1.5)
-                cell_color = (image[x][y], image[x][y], image[x][y])
-                rect = pygame.Rect(x_pos, y_pos, self.scale-self.offset, self.scale,self.offset)
-                pygame.draw.rect(self.screen, cell_color, rect)
-            
-    
 
     def get_neighbours(self, x, y):
         return Get_neighbours(x, y, self.rows, self.columns, self.grid_array)
@@ -120,7 +112,7 @@ class ConwaysGameOfLife:
         
     
     def run(self):
-        frame_count = 0
+        frame_count = 100
         while self.running:
             self.clock.tick(self.FPS)
             pygame.display.set_caption("FPS-{}".format(np.round(self.clock.get_fps())))
@@ -141,7 +133,6 @@ class ConwaysGameOfLife:
                             self.scaleTemp += event.unicode  
     
             self.Conway()
-            # self.gaussian_conway()
             
             if pygame.mouse.get_pressed()[0]:
                 x_pos, y_pos = pygame.mouse.get_pos()
